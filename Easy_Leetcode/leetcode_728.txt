@@ -1,0 +1,22 @@
+Leetcode 728
+
+class Solution {
+public:
+    vector<int> selfDividingNumbers(int left, int right) {
+        vector <int> vec;
+        for (int i=left; i<=right; i++) {
+            int ref=i;
+            int check=i;
+            int flag=0;
+            int count=0;
+            while (ref>0) {
+                int digit= ref%10;
+                count++;
+                if (digit!=0 && check%digit==0) flag++;
+                ref/=10;
+            }
+            if (flag==count)    vec.push_back(check);
+        }
+        return vec;
+    }
+};

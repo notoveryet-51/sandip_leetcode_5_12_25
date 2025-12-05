@@ -1,0 +1,18 @@
+Leetcode 1518
+
+
+
+int numWaterBottles(int numBottles, int numExchange) {
+    int full,rem,empty,total;
+    total=numBottles;
+    while (numBottles>=numExchange) {
+        
+        rem=numBottles%numExchange;
+        full=numBottles/numExchange;
+        
+        total+=full;
+        empty=full+rem;
+        numBottles=empty;
+    }
+    return total;
+}

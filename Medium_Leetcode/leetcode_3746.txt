@@ -1,0 +1,24 @@
+Leetcode 3746
+
+class Solution {
+public:
+    int minLengthAfterRemovals(string s) {
+        int countA=0,countB=0;
+        sort (s.begin(),s.end());
+        int a=s.size();
+        for (int i=0; i<a; i++) {
+            if (s[i]=='a')	countA++;
+            else countB++;
+        }
+        if (countA==countB) return 0;
+        else if (countA==a || countB==a) return a;
+        else {
+            while (countA!=0 && countB!=0 && a>0){
+                a-=2;
+                countA--;
+                countB--;
+            }
+            return a;
+        }
+    }
+};

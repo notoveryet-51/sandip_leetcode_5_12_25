@@ -1,0 +1,24 @@
+Leetcode 1752
+
+class Solution {
+public:
+    bool check(vector<int>& nums) {
+        int index=0;
+        for (int i=0; i<nums.size()-1; i++) {
+            if (nums[i]>nums[i+1]) {
+                index=i+1;
+                break;
+            }
+        }
+        vector<int>vec;
+        for (int i=index; i<nums.size(); i++)   vec.push_back(nums[i]);
+        for (int i=0; i<index; i++) vec.push_back(nums[i]);
+        sort (nums.begin(),nums.end());
+        int flag=0;
+        for (int i=0; i<nums.size(); i++) {
+            if (nums[i]==vec[i])    flag++;
+        }
+        if (flag==nums.size())  return true;
+        else return false;
+    }
+};

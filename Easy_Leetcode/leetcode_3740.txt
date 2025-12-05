@@ -1,0 +1,32 @@
+Leetcode 3740
+
+class Solution {
+public:
+    int minimumDistance(vector<int>& nums) {
+        int minimum = INT_MAX;
+        if (nums.size() < 3) return -1;
+
+        set<int> s(nums.begin(), nums.end());
+        vector<int> vec(s.begin(), s.end());
+
+        for (int i = 0; i < vec.size(); i++) {
+            int val = vec[i];
+            vector<int> same;
+
+            
+            for (int j = 0; j < nums.size(); j++) {
+                if (nums[j] == val)
+                    same.push_back(j);
+            }
+
+            if (same.size() < 3) continue;
+
+            for (int k = 0; k + 2 < same.size(); k++) {
+                int dist = 2 * (same[k + 2] - same[k]);
+                minimum = min(minimum, dist);
+            }
+        }
+
+        return (minimum == INT_MAX) ? -1 : minimum;
+    }
+};

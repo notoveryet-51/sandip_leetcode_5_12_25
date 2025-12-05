@@ -1,0 +1,21 @@
+Leetcode 48
+
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        
+        int i,j;
+        int a=matrix[0].size();
+        vector<vector<int>> reverse(a, vector<int>(a));
+        for (i=0; i<a; i++) {
+            for (j=0; j<a; j++) {
+                reverse[i][j]=(matrix[a-1-j][i]);
+            }
+        }
+        for (i=0; i<a; i++) {
+            for (j=0; j<a; j++) {
+                matrix[i][j]=reverse[i][j];
+            }
+        }
+    }
+};

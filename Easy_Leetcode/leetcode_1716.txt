@@ -1,0 +1,27 @@
+Leetcode 1716
+
+class Solution {
+public:
+    int totalMoney(int n) {
+        if (n<=7) {
+            int mon=0;
+            for (int i=1; i<=n; i++) {
+                mon+=i;
+            }
+            return mon;
+        }
+        else {
+            int sum=0;
+            int monday=0;
+            for (int i=1;i<=n; i++) {
+                int add_on=i%7;
+                if (add_on==0)  add_on=7;
+                sum=sum+monday+add_on;
+                if (i%7==0)   {
+                    monday++;
+                }
+            }
+            return sum;
+        }
+    }
+};

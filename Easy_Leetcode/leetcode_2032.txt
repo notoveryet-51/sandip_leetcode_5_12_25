@@ -1,0 +1,29 @@
+Leetcode 2032
+
+class Solution {
+public:
+    vector<int> twoOutOfThree(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3) {
+        set<int>s1,s2,s3;
+        for (int i=0; i<nums1.size(); i++)  s1.insert(nums1[i]);
+        for (int i=0; i<nums2.size(); i++)  s2.insert(nums2[i]);
+        for (int i=0; i<nums3.size(); i++)  s3.insert(nums3[i]);
+        vector<int>vec,v;
+        for (int element: s1)   vec.push_back(element); 
+        for (int element: s2)   vec.push_back(element); 
+        for (int element: s3)   vec.push_back(element);
+        sort(vec.begin(),vec.end()); 
+        for (int i=0; i<vec.size(); i++) {
+            int index;
+            int count=0;
+            for (int j=0; j<vec.size(); j++) {
+                if (vec[i]==vec[j]) {
+                    count++;
+                    index=j;
+                }
+            }
+            if (count>=2)   v.push_back(vec[i]);
+            i=index;
+        }
+        return v;
+    }
+};

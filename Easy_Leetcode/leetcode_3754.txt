@@ -1,0 +1,19 @@
+Leetcode 3754
+
+class Solution {
+public:
+    long long sumAndMultiply(int n) {
+        long long sum1=0,sum2=0;
+        long long mul=1;
+        while (n>0) {
+            long long digit=n%10;
+            if (digit!=0) {
+                sum1+=mul*digit;
+                sum2+=digit;
+                mul*=10;
+            }
+            n/=10;
+        }
+        return sum1*sum2;
+    }    
+};
