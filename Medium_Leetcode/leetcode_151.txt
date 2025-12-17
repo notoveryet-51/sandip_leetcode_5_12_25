@@ -1,0 +1,27 @@
+Leetcode 151
+
+class Solution {
+public:
+    string reverseWords(string s) {
+        vector <string> words;
+        string wordext="";
+        for (int i = 0; i < s.size(); i++) {
+            if (s[i] != ' ') {
+                wordext += s[i];
+            }
+            else {
+                if (wordext.size() > 0) {
+                    words.push_back(wordext);
+                    wordext = "";
+                }
+            }
+        }
+        if (wordext.size() > 0) words.push_back(wordext); //handles the last word
+        string req = "";
+        for (int i = words.size() - 1; i >= 0; i--) {
+            req += words[i]+" ";
+        }
+        req.pop_back();
+        return req;
+    }
+};

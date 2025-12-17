@@ -1,0 +1,21 @@
+Leetcode 2022
+
+class Solution {
+public:
+    vector<vector<int>> construct2DArray(vector<int>& original, int m, int n) {
+        vector<vector<int>>vec;
+        int n1=original.size();
+        if (n1!=m*n)    return vec;
+        vector<int>v;
+        int index=0;
+        for (int i=0; i<m; i++) {
+            v.clear();
+            for (int j=0; j<n; j++) {
+                v.push_back(original[j+index]);
+            }
+            vec.push_back(v);
+            index+=n;
+        }
+        return vec;
+    }
+};

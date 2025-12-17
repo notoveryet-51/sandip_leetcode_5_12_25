@@ -1,0 +1,43 @@
+Leetcode 3775
+
+class Solution {
+public:
+    string reverseWords(string s) {
+        //converting string to word vector
+        
+        stringstream ss(s);
+        vector <string> words;
+        string word;
+        while (ss>> word) {
+            words.push_back(word);
+        }
+        if (words.empty()) return s;
+        //counting vowels in first word in the vector
+        
+        int count=0;
+        for (char it: words[0]) {
+            if (it == 'a' || it == 'e' || it == 'i' || it == 'o' || it == 'u') count++;
+        }
+
+        //checking where vowels occurred same times
+
+        for (int i=1; i<words.size(); i++) {
+            int other_count=0;
+            for (char c: words[i]) {
+                if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') other_count++;
+            }
+
+            //reversing the similar occurence words
+
+            
+            if (count==other_count) {
+                reverse(words[i].begin(),words[i].end());
+            }
+        }
+
+        string req="";
+        for (int i=0 ;i<words.size(); i++) req+=words[i]+" ";
+        if (!req.empty()) req.pop_back();
+        return req;
+    }
+};
