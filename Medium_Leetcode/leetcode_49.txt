@@ -1,0 +1,23 @@
+Leetcode 49
+
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        vector<vector<string>>vec;
+        vector<string>original=strs;
+        vector<string>v;
+        set<string>s;
+        for (int i=0; i<strs.size(); i++) {
+            sort(strs[i].begin(),strs[i].end());
+            s.insert(strs[i]);
+        }
+        for (auto it: s) {
+            v.clear();
+            for (int i=0; i<strs.size(); i++) {
+                if (it==strs[i]) v.push_back(original[i]);
+            }
+            vec.push_back(v);
+        }
+        return vec;
+    }
+};
