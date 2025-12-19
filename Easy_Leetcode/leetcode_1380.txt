@@ -1,0 +1,25 @@
+Leetcode 1380
+
+class Solution {
+public:
+    vector<int> luckyNumbers(vector<vector<int>>& matrix) {
+        vector<int>vec;
+        int rows=matrix.size();
+        int columns=matrix[0].size();
+        for (int i=0; i<rows; i++) {
+            int index=-1;
+            int row_min=INT_MAX,column_max=INT_MIN;
+            for (int j=0; j<columns; j++) {
+                if (matrix[i][j]<row_min)   {
+                    row_min=matrix[i][j];
+                    index=j;
+                }
+            }
+            for (int k=0; k<rows; k++) {
+                if(matrix[k][index]>column_max) column_max=matrix[k][index];
+            }
+            if (row_min==column_max)    vec.push_back(row_min);
+        }
+        return vec;
+    }
+};
