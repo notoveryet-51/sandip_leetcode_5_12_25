@@ -1,0 +1,26 @@
+Leetcode 3163
+
+class Solution {
+public:
+    string compressedString(string word) {
+        string comp="";
+        int n=word.size();
+        int i=0,j=0;
+        int count=0;
+        while (j<n) {
+            if (word[i]==word[j] && count<9) {
+                count++;
+                j++; 
+            }
+            else {
+                comp+=to_string(count)+word[i];
+                count=0;
+                i=j;
+            }
+        }
+        if (count > 0) {
+            comp += to_string(count)+word[i];
+        }
+        return comp;
+    }
+};
