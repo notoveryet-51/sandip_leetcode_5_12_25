@@ -1,0 +1,15 @@
+Leetcode 3783
+
+class Solution {
+public:
+    int mirrorDistance(int n) {
+        int og=n;
+        int sum=0;
+        while (n>0) {
+            sum+=(n%10);
+            n/=10;
+            if (n>0) sum*=10;
+        }
+        return abs(og-sum);
+    }
+};
