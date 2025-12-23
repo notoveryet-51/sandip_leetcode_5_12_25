@@ -1,0 +1,22 @@
+Leetcode 121
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int n=prices.size();
+        int i=0, j=1;
+        int max_profit=0;
+        while (i<j && i<n && j<n) {
+            int profit=prices[j]-prices[i];
+            if (profit>0)  {
+                max_profit=max(profit,max_profit);
+                j++;
+            }
+            else {
+                i=j;
+                j++;
+            }
+        }
+        return max_profit;
+    }
+};
