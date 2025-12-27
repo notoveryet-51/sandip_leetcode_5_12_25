@@ -1,0 +1,19 @@
+Leetcode 2657
+
+class Solution {
+public:
+    vector<int> findThePrefixCommonArray(vector<int>& A, vector<int>& B) {
+        int n = A.size();
+        vector<int> vec;
+        vector<int> hash(n + 1, 0);
+        int count = 0;
+        for (int i = 0; i < n; i++) { 
+            hash[A[i]]++; 
+            if (hash[A[i]] == 2) count++; 
+            hash[B[i]]++;
+            if (hash[B[i]] == 2) count++; 
+            vec.push_back(count);
+        }
+        return vec;
+    }
+};
