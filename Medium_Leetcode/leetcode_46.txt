@@ -1,0 +1,19 @@
+Leetcode 46
+
+class Solution {
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        int n=nums.size();
+        vector<vector<int>>vec;
+        vector<int>v;
+        sort(nums.begin(), nums.end());
+        do {
+            v.clear();
+            for (auto it: nums) {
+                v.push_back(it);
+            }
+            vec.push_back(v);
+        } while (next_permutation(nums.begin(), nums.end()));
+        return vec;
+    }
+};
