@@ -1,0 +1,37 @@
+Leetcode 3211
+
+long long binpow(long long b, long long n) {
+    long long result = 1;
+    while (n > 0) {
+        if (n & 1) result *= b;
+        b *= b;
+        n >>= 1;
+    }
+    return result;
+}
+
+class Solution {
+public:
+    vector<string> validStrings(int n) {
+        long long dec = binpow(2, n) - 1;
+        vector<string> vec;
+        for (long long i = 0; i <= dec; i++) {
+            long long dig = i;
+            string bin;
+            if (dig == 0) bin.push_back('0');
+            while (dig > 0) {
+                bin.push_back((dig % 2) + '0');
+                dig /= 2;
+            }
+            while (bin.length() < n) bin.push_back('0');
+            reverse(bin.begin(), bin.end());
+            // Skip strings with "00"
+            for (int j = 1; j < bin.size(); j++) {
+                if (bin[j] == '0' && bin[j - 1] == '0') goto skip;
+            }
+            vec.push_back(bin);
+        skip:;
+        }
+        return vec;
+    }
+};
