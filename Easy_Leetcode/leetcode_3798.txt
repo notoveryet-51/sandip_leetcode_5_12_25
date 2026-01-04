@@ -1,0 +1,15 @@
+Leetcode 3798
+
+class Solution {
+public:
+    string largestEven(string s) {
+        int n=s.size();
+        string sr="";
+        int i,j=-1;
+        for (i=0; i<n; i++) {
+            if ((s[i]&1)==0)    j=i;
+        }
+        for (i=0; i<=j; i++) sr+=s[i];
+        return sr;
+    }
+};
