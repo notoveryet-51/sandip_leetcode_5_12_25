@@ -1,0 +1,27 @@
+Leetcode 1310
+
+class Solution {
+public:
+    vector<int> xorQueries(vector<int>& numbers, vector<vector<int>>& queries) {
+        int size = numbers.size();
+        vector<int> prefixXor(size);
+        prefixXor[0] = numbers[0];
+
+        for(int i = 1; i < size; i++)
+            prefixXor[i] = prefixXor[i - 1] ^ numbers[i];
+
+        vector<int> result;
+
+        for(auto &query : queries) {
+            int left = query[0];
+            int right = query[1];
+
+            if(left == 0)
+                result.push_back(prefixXor[right]);
+            else
+                result.push_back(prefixXor[right] ^ prefixXor[left - 1]);
+        }
+
+        return result;
+    }
+};
