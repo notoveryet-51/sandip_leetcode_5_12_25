@@ -1,0 +1,14 @@
+Leetcode 2220
+
+class Solution {
+public:
+    int minBitFlips(int start, int goal) {
+        int store,count=0;
+        store=start^goal;
+        while (store>0) {
+            store=store&(store-1);
+            count++;
+        }
+        return count;
+    }
+};
