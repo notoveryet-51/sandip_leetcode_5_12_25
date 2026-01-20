@@ -1,0 +1,28 @@
+Leetcode 3809
+
+class Solution {
+public:
+    vector<int> bestTower(vector<vector<int>>& towers, vector<int>& center, int radius) {
+        int dist=0;
+        int n=towers.size();
+        vector<int> v(2,-1),test;
+        for(int i=0;i<n;i++){
+            dist=abs(towers[i][0]-center[0])+abs(towers[i][1]-center[1]);
+            if(dist<=radius) test.push_back(i);
+        }
+        if(test.empty()) return v;
+        int chosen=test[0];
+        v[0]=towers[chosen][0];
+        v[1]=towers[chosen][1];
+        for(int i=1;i<test.size();i++){
+            int index=test[i];
+            if(towers[index][2]>towers[chosen][2]) chosen=index;
+            else if(towers[index][2]==towers[chosen][2]){
+                if(towers[index][0]<towers[chosen][0] || (towers[index][0]==towers[chosen][0] && towers[index][1]<towers[chosen][1])) chosen=index;
+            }
+        }
+        v[0]=towers[chosen][0];
+        v[1]=towers[chosen][1];
+        return v;
+    }
+};
