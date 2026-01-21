@@ -1,0 +1,17 @@
+Leetcode 3271
+
+class Solution {
+public:
+    string stringHash(string s, int k) {
+        int n=s.size();
+        string result="";
+        for (int i=0; i<n; i+=k)    {
+            int append=0;
+            for(int j=i; j<i+k; j++)  {
+                append+=((int)s[j]-97);
+            }
+            result+=(char)((append%26)+97);
+        }
+        return result;
+    }
+};
