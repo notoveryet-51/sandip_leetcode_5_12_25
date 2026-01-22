@@ -1,0 +1,14 @@
+Leetcode 69
+
+class Solution {
+public:
+    int mySqrt(int x) {
+        long long work=x;
+        if (x==1)   return 1;
+        for(long long i=1; i<=x; i++) {
+            long long check=i*i;
+            if (check>work)  return (int)i-1;
+        }
+        return 0; 
+    }
+};
