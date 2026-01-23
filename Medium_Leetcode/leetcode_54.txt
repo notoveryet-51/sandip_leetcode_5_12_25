@@ -1,0 +1,28 @@
+Leetcode 54
+
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        vector<int> v;
+        if(matrix.empty()) return v; 
+        int rows = matrix.size();
+        int column = matrix[0].size();
+        int sRow = 0, sCol = 0, eRow = rows - 1, eCol = column - 1;
+        while(sRow <= eRow && sCol <= eCol) {
+            for(int i = sCol; i <= eCol; i++)
+                v.push_back(matrix[sRow][i]);
+            for(int i = sRow + 1; i <= eRow; i++)
+                v.push_back(matrix[i][eCol]);
+            if(sRow < eRow) {   
+                for(int i = eCol - 1; i >= sCol; i--)
+                    v.push_back(matrix[eRow][i]);
+            }
+            if(sCol < eCol) {   
+                for(int i = eRow - 1; i >= sRow + 1; i--)
+                    v.push_back(matrix[i][sCol]);
+            }
+            sRow++; eRow--; sCol++; eCol--;
+        }
+        return v;
+    }
+};
