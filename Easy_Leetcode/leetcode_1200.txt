@@ -1,0 +1,20 @@
+Leetcode 1200
+
+class Solution {
+public:
+    vector<vector<int>> minimumAbsDifference(vector<int>& arr) {
+        sort(arr.begin(),arr.end());
+        int n=arr.size();
+        int min_dif=INT_MAX;
+        vector<vector<int>>vec;
+        for (int i=1; i<n; i++) {
+            if ((arr[i]-arr[i-1])<min_dif)  min_dif=arr[i]-arr[i-1];
+        }
+        for (int i=1; i<n; i++) {
+            if ((arr[i]-arr[i-1])==min_dif) {
+                vec.push_back({arr[i-1],arr[i]});
+            }
+        }
+        return vec;
+    }
+};
