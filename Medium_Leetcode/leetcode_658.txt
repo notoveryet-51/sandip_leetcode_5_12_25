@@ -1,0 +1,32 @@
+Leetcode 658
+
+class Solution {
+public:
+    int findLowerBound(vector<int>& arr, int x) {
+        int l = 0, r = arr.size();
+        while (l < r) {
+            int mid = l + (r - l) / 2;
+            if (arr[mid] < x) l = mid + 1;
+            else r = mid;
+        }
+        return l;
+    }
+
+    vector<int> findClosestElements(vector<int>& arr, int k, int x) {
+        int n = arr.size();
+        int right = findLowerBound(arr, x);
+        int left = right - 1;
+        vector<int> result;
+        while (k--) {
+            if (left < 0) result.push_back(arr[right++]);
+            else if (right >= n) result.push_back(arr[left--]);
+            else if (abs(arr[left] - x) <= abs(arr[right] - x))
+                result.push_back(arr[left--]);
+            else
+                result.push_back(arr[right++]);
+        }
+
+        sort(result.begin(), result.end());
+        return result;
+    }
+};
