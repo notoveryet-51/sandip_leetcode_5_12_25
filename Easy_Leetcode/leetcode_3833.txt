@@ -1,0 +1,19 @@
+Leetcode 3833
+
+class Solution {
+public:
+    int dominantIndices(vector<int>& nums) {
+        float sum=0;
+        for (int i=0; i<nums.size(); i++){
+            sum+=nums[i];
+        }
+        int j=nums.size()-1, count=0;
+        for (int i=0; i<nums.size()-1; i++) {
+            sum-=nums[i];
+            float avg=sum/j;
+            j--;
+            if (avg<nums[i]) count++;
+        }
+        return count;
+    }
+};
