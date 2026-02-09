@@ -1,0 +1,10 @@
+Leetcode 28
+
+class Solution {
+public:
+    int strStr(string ha, string ne) {
+        if (ha.find(ne)==string::npos)  return -1;
+        int i=ha.find(ne);
+        return i;
+    }
+};
