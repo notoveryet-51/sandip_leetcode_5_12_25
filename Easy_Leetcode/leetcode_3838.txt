@@ -1,0 +1,18 @@
+Leetcode 3838
+
+class Solution {
+public:
+    string mapWordWeights(vector<string>& words, vector<int>& weights) {
+        char array[26]={'z','y','x','w','v','u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a'};
+        string result="";   int wt;
+        for (int i=0; i<words.size(); i++)  {
+            wt=0;
+            for (int j=0; j<words[i].size(); j++)  {
+                wt+=weights[words[i][j]-'a'];
+            }
+            int cal=wt%26;
+            result+=array[cal];
+        }
+        return result;
+    }
+};
