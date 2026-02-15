@@ -1,0 +1,27 @@
+Leetcode 3839
+
+class Solution {
+public:
+    int prefixConnected(vector<string>& words, int k) {
+        sort(words.begin(), words.end());
+        int count = 0;
+        for (int i = 0; i < words.size(); ) {
+            if (words[i].size() < k) {
+                i++;
+                continue;
+            }
+            int wrd = 1;
+            string pref = words[i].substr(0, k);
+            int j = i + 1;
+            while (j < words.size()) {
+                if (words[j].size() >= k && words[j].substr(0, k) == pref) {
+                    wrd++;
+                    j++;
+                } else break;
+            }
+            if (wrd >= 2) count++;
+            i = j;
+        }
+        return count;
+    }
+};
