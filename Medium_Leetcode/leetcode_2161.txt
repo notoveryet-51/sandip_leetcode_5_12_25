@@ -1,0 +1,12 @@
+Leetcode 2161
+
+class Solution {
+public:
+    vector<int> pivotArray(vector<int>& nums, int pivot) {
+        vector<int>rslt;
+        for (auto it: nums) if (it<pivot)   rslt.push_back(it);
+        for (auto it: nums) if (it==pivot)  rslt.push_back(it);
+        for (auto it: nums) if (it>pivot)   rslt.push_back(it);
+        return rslt;
+    }
+};
