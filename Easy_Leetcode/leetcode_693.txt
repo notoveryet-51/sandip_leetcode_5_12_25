@@ -1,0 +1,10 @@
+Leetcode 693
+
+class Solution {
+public:
+    bool hasAlternatingBits(int n) {
+        unsigned int check=n^(n>>1);
+        if (((check + 1) & check) == 0)    return true;
+        else return false;
+    }
+};
