@@ -1,0 +1,16 @@
+Leetcode 58
+
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+        int count=0,temp;
+        for (int i=0; i<s.size(); i++)  {
+            if (s[i]==' ')  {
+                count=0;
+            }
+            else count++;
+            if (count!=0)   temp=count;
+        }
+        return temp;
+    }
+};
