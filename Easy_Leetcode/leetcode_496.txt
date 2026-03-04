@@ -1,0 +1,22 @@
+Leetcode 496
+
+class Solution {
+public:
+    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+        vector<int>vec;
+        for (int i=0; i<nums1.size(); i++) {
+            int check=nums1[i];
+            int index=nums2.size();
+            for (int j=0; j<nums2.size(); j++)  {
+                if (check==nums2[j]) {
+                    index=j;
+                }
+                if (j>index && nums2[j]>check)   {
+                    vec.push_back(nums2[j]); break;
+                }
+            }
+            if (vec.size()<i+1) vec.push_back(-1);
+        }
+        return vec;
+    }
+};
