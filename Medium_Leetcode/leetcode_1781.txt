@@ -1,0 +1,29 @@
+Leetcode 1781
+
+class Solution {
+public:
+    int differenceSubstr(string str)   {
+        int hash[26]={0};
+        for (auto it: str)  hash[it-'a']++;
+        int mini=INT_MAX,maxi=INT_MIN;
+        for (int i=0; i<26; i++)   {
+            if (hash[i]>0)  {
+                mini=min(mini,hash[i]);
+                maxi=max(maxi,hash[i]);
+            }
+        }
+        return maxi-mini;
+    }
+    int beautySum(string s) {
+        int n=s.size(); int sum=0;
+        for (int i=0; i<n; i++) {
+            string check="";
+            check+=s[i];
+            for (int j=i+1; j<n; j++)   {
+                check+=s[j];
+                sum+=differenceSubstr(check);
+            }
+        }
+        return sum;
+    }
+};
