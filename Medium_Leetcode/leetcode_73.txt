@@ -1,0 +1,23 @@
+Leetcode 73
+
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& nums) {
+        vector<pair<int,int>>p;
+        int m=nums.size();
+        int n=nums[0].size();
+        //marking 0's
+        for (int i=0; i<m; i++) {
+            for (int j=0; j<n; j++) {
+                if (nums[i][j]==0)  p.push_back({i,j});
+            }
+        }
+        //traversing and turning 0
+        for (auto it: p)    {
+            int i=it.first;
+            int j=it.second;
+            for (int k=0; k<n; k++)  nums[i][k]=0;
+            for (int k=0; k<m; k++) nums[k][j]=0;
+        }
+    }
+};
