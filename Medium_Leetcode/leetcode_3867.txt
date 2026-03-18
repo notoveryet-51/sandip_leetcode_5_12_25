@@ -1,0 +1,26 @@
+Leetcode 3867
+
+class Solution {
+public:
+    long long gcdSum(vector<int>& nums) {
+        vector<long long>prefixMax;
+        long long maxi=LLONG_MIN;
+        for (int i=0; i<nums.size(); i++) {
+            if (nums[i]>maxi) maxi=nums[i];
+            prefixMax.push_back(maxi);
+        }
+        vector<long long>prefixGcd;
+        for (int i=0; i<nums.size(); i++) {
+            int check=gcd(prefixMax[i],nums[i]);
+            prefixGcd.push_back(check);
+        }
+        sort(prefixGcd.begin(),prefixGcd.end());
+        long long i=0,j=nums.size()-1;
+        long long sum=0;
+        while(i<j) {
+            sum+=gcd(prefixGcd[i],prefixGcd[j]);
+            i++; j--;
+        }
+        return sum;
+    }
+};
