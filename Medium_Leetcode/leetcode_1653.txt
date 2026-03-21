@@ -1,0 +1,27 @@
+Leetcode 1653
+
+class Solution {
+public:
+    int minimumDeletions(string s) {
+        int n=s.size();
+        vector<int> prefix,suffix(n,0);
+        int count=0;
+        if (s[0]=='b')  prefix.push_back(1);
+        else prefix.push_back(0);
+        for(int i=1;i<n; i++)   {
+            if (s[i]=='b')  prefix.push_back(prefix.back()+1);
+            else prefix.push_back(prefix.back());
+        }
+        if (s[n-1]=='a')  suffix[n-1]=1;
+        else suffix[n-1]=0;
+        for (int i=n-2; i>=0; i--)  {
+            if (s[i]=='a')  suffix[i]=suffix[i+1]+1;
+            else suffix[i]=suffix[i+1];
+        }
+        int res=min(prefix[n-1],suffix[0]);
+        for (int i=0; i<n-1; i++)   {
+            res=min(res,prefix[i]+suffix[i+1]);
+        }
+        return res;
+    }
+};
