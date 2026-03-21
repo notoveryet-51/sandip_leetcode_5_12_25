@@ -1,0 +1,25 @@
+Leetcode 2042
+
+class Solution {
+public:
+    bool areNumbersAscending(string str) {
+        int n=str.size();
+        string s="";
+        vector<string>v;
+        for (int i=0; i<n; i++)  {
+            s+=str[i];
+            if (str[i]==' ')  {
+                v.push_back(s); s.clear();
+            }
+        }
+        v.push_back(s);
+        vector<int>result;
+        for (int i=0; i<v.size(); i++)    {
+            if (isdigit(v[i][0])) result.push_back(stoi(v[i]));
+        }
+        for (int i=0; i<result.size()-1; i++)    {
+            if (result[i]>=result[i+1])   return false;    
+        }
+        return true;
+    }
+};
