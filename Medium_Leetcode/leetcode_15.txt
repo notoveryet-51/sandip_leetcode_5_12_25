@@ -6,11 +6,13 @@ public:
         sort(nums.begin(),nums.end());
         int n=nums.size();
         int target=0;
-        set<vector<int>>st;
         vector<vector<int>>result;
+        int copy=INT_MAX;
         for (int i=0; i<n; i++)     {
+            if (copy==nums[i]) continue;
             vector<int>v;
             int reqSum=target-(nums[i]);
+            copy=nums[i];
             int j=i+1,k=n-1;
             while (j<k) {
                 if (nums[j]+nums[k]<reqSum) j++;
@@ -18,13 +20,21 @@ public:
                     v.push_back(nums[i]);
                     v.push_back(nums[j]);
                     v.push_back(nums[k]);
-                    st.insert(v);
+                    if (result.empty()) result.push_back(v);
+                    else if (result.back()!=v) result.push_back(v);
                     j++; k=n-1; v.clear();
                 }
                 else k--;
             }
         }
-        for (auto it: st)   result.push_back(it);
+        if (result.size()<=1) return result;
+        //sort(result.begin(),result.end());
+        for (int i=0; i<result.size()-1; i++)  { 
+            if (result [i]==result[i+1]) {
+                result.erase(result.begin()+i+1);
+                i--;
+            }
+        }
         return result;
     }
 };
