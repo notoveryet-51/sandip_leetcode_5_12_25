@@ -1,0 +1,51 @@
+Leetcode 18
+
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        sort(nums.begin(), nums.end());
+        int n = nums.size();
+        vector<vector<int>> result;
+        if (n<4) return result;
+        int copy1=INT_MAX,copy2;    copy2=copy1;
+        for (int i = 0; i < n; i++) {
+            if (copy1==nums[i]) continue;
+            copy1=nums[i];
+            for (int j = i + 1; j < n; j++) {
+                long long sum = nums[i] + nums[j];
+                long long remSum = target - sum;
+                int left = j + 1;
+                int right = n - 1;
+                while (left < right) {
+                    int curr = nums[left] + nums[right];
+                    if (curr > remSum) {
+                        right--;
+                    }
+                    else if (curr < remSum) {
+                        left++;
+                    }
+                    else {
+                        vector<int> v;
+                        v.push_back(nums[i]);
+                        v.push_back(nums[j]);
+                        v.push_back(nums[left]);
+                        v.push_back(nums[right]);
+                        if(result.empty()) result.push_back(v);
+                        if(result.back()!=v) result.push_back(v);
+                        left++;
+                        right=n-1;
+                    }
+                }
+            }
+        }
+        if (result.size()<2) return result;
+        sort(result.begin(), result.end());
+        for (int i=0; i<result.size()-1; i++)  { 
+            if (result [i]==result[i+1]) {
+                result.erase(result.begin()+i+1);
+                i--;
+            }
+        }
+        return result;
+    }
+};
