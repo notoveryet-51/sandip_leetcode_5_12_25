@@ -1,0 +1,24 @@
+Leetcode 3779
+
+class Solution {
+public:
+    int minOperations(vector<int>& nums) {
+        int n=nums.size();
+        set<int>st;
+        for (auto it: nums) st.insert(it);
+        if (n==st.size())   return 0;
+        int hash[1000000]={0};
+        for (int i=0; i<n; i++) hash[nums[i]]++; 
+        for (int i=0; i<n; i++) {
+            if (hash[nums[i]]>1)    {
+                hash[nums[i]]--;    nums[i]=0;
+            }
+        }
+        int index=0;
+        for (int i=n-1; i>=0; i--) if (nums[i]==0) {
+            index=i;    break;
+        }
+        int count=index+1;
+        return (count+3-1)/3;
+    }
+};
