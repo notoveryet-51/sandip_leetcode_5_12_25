@@ -1,0 +1,22 @@
+Leetcode 3780
+
+class Solution {
+public:
+    int maximumSum(vector<int>& nums) {
+        int maxi=0; int n=nums.size();
+        vector<int>rem0,rem1,rem2;
+        for (int i=0; i<n; i++) {
+            if (nums[i]%3==0)   rem0.push_back(nums[i]);
+            else if (nums[i]%3==1)   rem1.push_back(nums[i]);
+            else   rem2.push_back(nums[i]);
+        }
+        sort(rem1.begin(),rem1.end());  int n1=rem1.size();
+        sort(rem2.begin(),rem2.end());  int n2=rem2.size();
+        sort(rem0.begin(),rem0.end());  int n0=rem0.size();
+        if (rem1.size()>2)  maxi=rem1[n1-3]+rem1[n1-2]+rem1[n1-1];
+        if (rem2.size()>2)  maxi=max(rem2[n2-3]+rem2[n2-2]+rem2[n2-1],maxi);
+        if (rem0.size()>2)  maxi=max(rem0[n0-3]+rem0[n0-2]+rem0[n0-1],maxi);
+        if (n0>0 && n1>0 && n2>0)   maxi=max(maxi,rem0[n0-1]+rem1[n1-1]+rem2[n2-1]);
+        return maxi;
+    }
+};
