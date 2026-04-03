@@ -1,0 +1,13 @@
+Leetcode 1561
+
+class Solution {
+    public int maxCoins(int[] piles) {
+        int n=piles.length;
+        Arrays.sort(piles);
+        int idx=n/3;    int count=0;
+        for (int i=idx; i<n; i=i+2)   {
+            count+=piles[i];
+        }
+        return count;
+    }
+}
