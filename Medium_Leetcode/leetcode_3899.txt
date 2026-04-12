@@ -1,0 +1,17 @@
+Leetcode 3899
+
+class Solution {
+public:
+    vector<double> internalAngles(vector<int>& sides) {
+        vector<double>v;
+        if (sides[0]+sides[1]<=sides[2] || sides[0]+sides[2]<=sides[1] || sides[2]+sides[1]<=sides[0]) return v;
+        double a=(double)(sides[0]*sides[0]+sides[1]*sides[1]-sides[2]*sides[2])/(2.0*sides[0]*sides[1]);
+        double b=(double)(sides[0]*sides[0]+sides[2]*sides[2]-sides[1]*sides[1])/(2.0*sides[0]*sides[2]);
+        double c=(double)(sides[2]*sides[2]+sides[1]*sides[1]-sides[0]*sides[0])/(2.0*sides[2]*sides[1]);
+        double a1=acos(a); double b1=acos(b); double c1=acos(c);
+        a1=(double)a1/(asin(1)*2)*180; b1=(double)b1/(asin(1)*2)*180; c1=(double)c1/(asin(1)*2)*180;
+        v.push_back(a1); v.push_back(b1); v.push_back(c1);
+        sort(v.begin(),v.end());
+        return v;
+    }
+};
