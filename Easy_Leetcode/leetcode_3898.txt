@@ -1,0 +1,17 @@
+Leetcode 3898
+
+class Solution {
+public:
+    vector<int> findDegrees(vector<vector<int>>& matrix) {
+        int n=matrix.size();
+        vector<int>hash(n);
+        for (int j=0; j<n; j++) {
+            int count=0;
+            for (int i=0; i<n; i++) {
+                if (matrix[i][j]==1) count++;
+            }
+            hash[j]=count;
+        }
+        return hash;
+    }
+};
