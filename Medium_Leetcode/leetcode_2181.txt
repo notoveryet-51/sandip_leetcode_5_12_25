@@ -1,0 +1,36 @@
+Leetcode 2181
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeNodes(ListNode* head) {
+        //create a linked list
+        ListNode *head1=NULL,*tail=NULL,*temp=head->next;
+        int sum=0;
+        while (temp!=NULL) {
+            if (temp->val!=0) sum+=temp->val;
+            else {
+                ListNode *newNode=new ListNode(sum);
+                if (head1==NULL) {
+                    head1=newNode;  tail=newNode;
+                }
+                else {
+                    tail->next=newNode;
+                    tail=newNode;
+                }
+                sum=0;
+            }
+            temp=temp->next;
+        }
+        return head1;
+    }
+};
