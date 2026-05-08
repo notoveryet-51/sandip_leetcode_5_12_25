@@ -1,0 +1,35 @@
+Leetcode 148
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* sortList(ListNode* head) {
+        ListNode *temp=head,*ret,*head1=NULL,*tail;
+        vector<int>vec;
+        while (temp!=NULL) {
+            vec.push_back(temp->val);
+            temp=temp->next;
+        }
+        sort(vec.begin(),vec.end());
+        for (int i=0; i<vec.size(); i++) {
+            ret=new ListNode(vec[i]);
+            if (head1==NULL) {
+                head1=ret;  tail=ret;
+            }
+            else {
+                tail->next=ret;
+                tail=tail->next;
+            }
+        }
+        return head1;
+    }
+};
