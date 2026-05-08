@@ -1,0 +1,19 @@
+Leetcode 796
+
+class Solution {
+public:
+    string generate(string &s) {
+        char ch=s[0];
+        s.erase(0,1);
+        s+=ch;
+        return s;
+    }
+    bool rotateString(string s, string goal) {
+        int n=s.size();
+        if (s==goal) return true;
+        while (n--) {
+            if (generate(s)==goal)  return true;
+        }
+        return false;
+    }
+};
