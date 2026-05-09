@@ -1,0 +1,39 @@
+Leetcode 25
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        vector<int>v;
+        ListNode* temp=head,*head1=NULL,*tail;
+        while (temp!=NULL) {
+            v.push_back(temp->val);
+            temp=temp->next;
+        }
+        int j=0;
+        do {
+            reverse (v.begin()+j,v.begin()+j+k);
+            j=j+k;
+        } while (j+k<=v.size());
+        for (int i=0; i<v.size(); i++) {
+            ListNode *newNode=new ListNode(v[i]);
+            if (head1==NULL) {
+                head1=newNode; tail=newNode;
+            }
+            else {
+                tail->next=newNode;
+                tail=newNode;
+            }
+        }
+        return head1;
+    }
+};
