@@ -1,0 +1,39 @@
+Leetcode 61
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        ListNode *temp=head,*tail;
+        if (head==NULL) return NULL;
+        if (head->next==NULL) return head;
+        // for minimum 2 nodes
+        int count=1;
+        while (temp->next!=NULL) {
+            count++;    
+            temp=temp->next;
+        }
+        tail=temp;
+        k%=count;
+        if (k==0)   return head;
+        int start=count-k;
+        int check=0;
+        while (check<start) {
+            tail->next=head;
+            tail=head;
+            head=head->next;
+            check++;
+        }
+        tail->next=NULL;
+        return head;
+    }
+};
