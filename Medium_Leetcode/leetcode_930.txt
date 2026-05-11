@@ -1,0 +1,29 @@
+Leetcode 930
+
+class Solution {
+public:
+    int numSubarraysWithSum(vector<int>& nums, int goal) {
+        int n=nums.size();
+        int left=0, right=0, sum=0, count=0;
+        while (right<n) {
+            sum+=nums[right];
+            while (left<right && sum>goal) {
+                sum-=nums[left];
+                left++;
+            }
+            // calculating zeros in reduced window using a temporary index pointer
+            if (sum==goal) {
+                //only zero count
+                int temp_left=left;
+                while (temp_left<right && nums[temp_left]==0) {
+                    count++;
+                    temp_left++;
+                }
+                //mandatory count
+                count++;
+            }
+            right++;
+        }
+        return count;
+    }
+};
