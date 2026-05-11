@@ -1,0 +1,48 @@
+Leetcode 907
+
+class Solution {
+public:
+
+    //find next smaller elements index
+    vector<int> nse(vector<int> &arr) {
+        int n=arr.size();
+        vector<int>nse(n);
+        stack<int>st;
+        nse[n-1]=n;
+        st.push(n-1);
+        for (int i=n-2; i>=0; i--) {
+            while (!st.empty() && arr[st.top()]>=arr[i]) st.pop();
+            nse[i]=st.empty() ? n: st.top();
+            st.push(i);
+        }
+        return nse;
+    }
+
+    //previous smaller or equal elements index
+    vector<int> psee(vector<int> &arr) {
+        int n=arr.size();
+        vector<int>psee(n);
+        stack<int>st;
+        for (int i=0; i<n; i++) {
+            while (!st.empty() && arr[st.top()]>arr[i]) st.pop();
+            psee[i]=st.empty() ? -1: st.top();
+            st.push(i);
+        }
+        return psee;
+    }
+
+    //main computation
+    int sumSubarrayMins(vector<int> &arr) {
+        int n=arr.size();
+        vector<int>nse_here=nse(arr);
+        vector<int>psee_here=psee(arr);
+        int total=0;
+        int mod=(int)(1e9+7);
+        for (int i=0; i<n; i++) {
+            int left=i-psee_here[i];
+            int right=nse_here[i]-i;
+            total=(total+(right*left*1LL*arr[i])%mod)%mod;
+        }
+        return total;
+    }
+};
