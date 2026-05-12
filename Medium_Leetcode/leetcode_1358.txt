@@ -11,3 +11,26 @@ public:
         return count;
     }
 };
+
+Leetcode 1358
+
+class Solution {
+public:
+    bool checkOccurence(int arr[]) {
+        if (arr[0]>0 && arr[1]>0 && arr[2]>0) return true;
+        return false;
+    }
+    int numberOfSubstrings(string s) {
+        int left=0, right=0, n=s.size(), hash[3]={0}, count=0;
+        while (right<n) {
+            hash[s[right]-'a']++;
+            while (checkOccurence(hash)) {
+                count+=(n-right);
+                hash[s[left]-'a']--;
+                left++;
+            }
+            right++;
+        }
+        return count;
+    }
+};
