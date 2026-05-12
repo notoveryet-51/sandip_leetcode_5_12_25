@@ -1,0 +1,19 @@
+Leetcode 1423
+
+class Solution {
+public:
+    int maxScore(vector<int>& cardPoints, int k) {
+        int n=cardPoints.size(), sum=0;
+        for (int i=0; i<k; i++) sum+=cardPoints[i];
+        int left=k-1, right=n-1;
+        int maxSum=sum;
+        while (left>=0) {
+            sum-=cardPoints[left];
+            sum+=cardPoints[right];
+            left--;
+            right--;
+            maxSum=max(maxSum,sum);
+        }
+        return maxSum;
+    }
+};
