@@ -1,0 +1,29 @@
+Leetcode 992
+
+class Solution {
+public:
+    int subarraysWithKDistinct(vector<int>& nums, int k) {
+        int left=0, right=0, n=nums.size(), count=0, final_count=0;
+        unordered_map<int,int>mp;
+        while (right<n) {
+            mp[nums[right]]++;
+            while (mp.size()>k) {
+                mp[nums[left]]--;
+                if (mp[nums[left]]==0) mp.erase(nums[left]);
+                left++;
+                count=0;
+            }
+            // counting valid subarrays in the range
+            if (mp.size()==k) {
+                while (mp[nums[left]]>1) { // we try to maintain the distinctness
+                    mp[nums[left]]--;
+                    left++;
+                    count++;
+                }
+                final_count+=count+1;
+            }
+            right++;
+        }
+        return final_count;
+    }
+};
