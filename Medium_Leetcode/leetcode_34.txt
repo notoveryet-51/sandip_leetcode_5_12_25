@@ -30,3 +30,29 @@ public:
         return v;
     }
 };
+
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        vector<int>vec;
+        int n=nums.size();
+        if (n==0) return {-1,-1};
+        int high=n-1, low=0;
+        while (low<=high) {
+            int mid=(high+low)/2;
+            if (nums[mid]>=target) high=mid-1;
+            else low=mid+1;
+        }
+        if (low<n && nums[low]==target) vec.push_back(low);
+        else vec.push_back(-1);
+        high=n-1, low=0;
+        while (low<=high) {
+            int mid=(high+low)/2;
+            if (nums[mid]<=target) low=mid+1;
+            else high=mid-1;
+        }
+        if (high>=0 && nums[high]==target) vec.push_back(high);
+        else vec.push_back(-1);
+        return vec;
+    }
+};
