@@ -1,0 +1,36 @@
+Leetcode 1011
+
+class Solution {
+public:
+    bool checkThreshold(vector<int> &weights, int mid, int limit) {
+        int sum=0; int count=0;
+        int point=0;
+        while (point<weights.size()) {
+            if (weights[point]>mid) return false;
+            sum+=weights[point];
+            if (sum>mid) {
+                point--;
+                sum=0;
+                count++;
+            }
+            point++;
+        }
+        count++;
+        return count<=limit;
+    }
+
+    int shipWithinDays(vector<int>& weights, int limit) {
+        int high=0, low=0;
+        int n=weights.size();
+        for (int i=0; i<n; i++) {
+            high+=weights[i];
+            low=max(low,weights[i]);
+        }
+        while (low<=high) {
+            int mid=(low+high)/2;
+            if (checkThreshold(weights,mid,limit)) high=mid-1;
+            else low=mid+1;
+        }
+        return low;
+    }
+};
