@@ -1,0 +1,35 @@
+Leetcode 410
+
+class Solution {
+public:
+    bool largestSum(vector<int> &nums, int mid, int m) {
+        int point=0, checkSum=0, count=0;
+        while (point<nums.size()) {
+            if (nums[point]>mid) return false;
+            checkSum+=nums[point];
+            if (checkSum>mid) {
+                checkSum=0;
+                point--;
+                count++;
+            }
+            point++;
+        }
+        count++;
+        return count<=m;
+    }
+
+    int splitArray(vector<int>& nums, int m) {
+        if (m>nums.size()) return -1;
+        int high=0, low=0;
+        for (int i=0; i<nums.size(); i++) {
+            low=max(low,nums[i]);
+            high+=nums[i];
+        }
+        while (low<=high) {
+            int mid=(high+low)/2;
+            if (largestSum(nums,mid,m)) high=mid-1;
+            else low=mid+1;
+        }
+        return low;
+    }
+};
