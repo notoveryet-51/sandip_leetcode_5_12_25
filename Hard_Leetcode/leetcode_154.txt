@@ -1,0 +1,28 @@
+Leetcode 154
+
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        int high=nums.size()-1, low=0;
+        int mn=INT_MAX;
+        while (low<=high) {
+            int mid=(high+low)/2;
+            if (nums[low]==nums[mid] && nums[mid]==nums[high]) {
+                mn=min(mn,nums[mid]);
+                low++;  high--;
+                continue;
+            }
+            //left sorted
+            if(nums[low]<=nums[mid]) {
+                mn=min(nums[low],mn);
+                low=mid+1;
+            }
+            //right sorted
+            else {
+                mn=min(nums[mid],mn);
+                high=mid-1;
+            }
+        }
+        return mn;
+    }
+};
