@@ -1,0 +1,30 @@
+Leetcode 8
+
+class Solution {
+public:
+    int resultReturn(string input, int index, long long num, bool isNegative) {
+        if (index==input.size() || input[index]<'0' || input[index]>'9') {
+            return isNegative ? (int)-num : (int)num;
+        }
+        if (input[index]==' ') return (int)num;
+        int digit=(input[index]-'0');
+        num=(num*10+digit);
+        if (!isNegative && num>=INT_MAX) return INT_MAX;
+        if (isNegative && num>(long long)INT_MAX) return INT_MIN;
+        return resultReturn(input, index+1, num, isNegative);
+    }
+
+    int myAtoi(string input) {
+        int i=0;
+        while(i<input.size() && input[i]==' ') i++;
+        if (i == input.size()) return 0;
+        bool isNegative = false;
+        if (input[i]=='-') {
+            isNegative=true;
+            i++;
+        } else if (input[i]=='+') {
+            i++;
+        }
+        return resultReturn(input, i, 0, isNegative);
+    }
+};
