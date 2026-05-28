@@ -1,0 +1,25 @@
+Leetcode 39
+
+class Solution {
+public:
+    void possibleCombinations(vector<int>& candidates, int target, vector<vector<int>> &res, vector<int> &mid, int idx, int sum) {
+        if (sum==target) {
+            res.push_back(mid); return;
+        }
+        if (sum>target || idx==candidates.size()) {
+            return;
+        }
+        mid.push_back(candidates[idx]);
+        possibleCombinations(candidates, target, res, mid, idx, sum+candidates[idx]);
+        mid.pop_back();
+        possibleCombinations(candidates, target, res, mid, idx+1, sum);
+    }
+
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>>res;
+        vector<int>mid;
+        int idx=0, sum=0;
+        possibleCombinations(candidates, target, res, mid, idx, sum);
+        return res;
+    }
+};
