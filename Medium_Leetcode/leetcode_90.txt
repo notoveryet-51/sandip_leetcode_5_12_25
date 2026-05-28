@@ -1,0 +1,25 @@
+Leetcode 90
+
+class Solution {
+public:
+    void countSubset(vector<int>& nums, int idx, vector<vector<int>> &result, vector<int> &cal) {
+        if (idx==nums.size()) {
+            result.push_back(cal);
+            return;
+        }
+        cal.push_back(nums[idx]);
+        countSubset(nums, idx+1, result, cal);
+        cal.pop_back();
+        while (idx+1<nums.size() && nums[idx]==nums[idx+1]) idx++;
+        countSubset(nums, idx+1, result, cal);
+    }
+
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        int idx=0;
+        sort(nums.begin(), nums.end());
+        vector<vector<int>>result;
+        vector<int> cal;
+        countSubset(nums, idx, result, cal);
+        return result;
+    }
+};
