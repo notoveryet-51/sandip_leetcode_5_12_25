@@ -1,0 +1,28 @@
+Leetcode 40
+
+class Solution {
+public:
+    void possibleCombinations(vector<int>& candidates, int target, vector<vector<int>> &result, vector<int> &mid, int idx, int sum) {
+        if (sum==target) {
+            result.push_back(mid); return;
+        }
+        if (sum>target || idx==candidates.size()) return;
+        mid.push_back(candidates[idx]);
+        possibleCombinations(candidates, target, result, mid, idx+1, sum+candidates[idx]);
+        mid.pop_back();
+        // skipping similar elements
+        while (idx+1<candidates.size() && candidates[idx]==candidates[idx+1]) {
+            idx++;
+        }
+        possibleCombinations(candidates, target, result, mid, idx+1, sum);
+    }
+    vector<vector<int> > combinationSum2(vector<int>& candidates, int target) {
+        //your code goes here
+        sort(candidates.begin(), candidates.end());
+        vector<vector<int>>result;
+        vector<int>mid;
+        int idx=0, sum=0;
+        possibleCombinations(candidates, target, result, mid, idx, sum);
+        return result;
+    }
+};
