@@ -1,0 +1,24 @@
+Leetcode 216
+
+class Solution {
+public:
+    void countSubset(int idx, vector<vector<int>> &result, vector<int> &cal, int sum, int target, int k) {
+        if (cal.size()==k) {
+            if (sum==target) result.push_back(cal);
+            return;
+        }
+        if (idx>9 || sum>target) return;
+        cal.push_back(idx);
+        countSubset(idx+1, result, cal, sum+idx, target, k);
+        cal.pop_back();
+        countSubset(idx+1, result, cal, sum, target, k);
+    }
+
+    vector<vector<int>> combinationSum3(int k, int target) {
+        int idx=1, sum=0;
+        vector<vector<int>>result;
+        vector<int> cal;
+        countSubset(idx, result, cal, sum, target, k);
+        return result;
+    }
+};
