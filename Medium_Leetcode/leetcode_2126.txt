@@ -1,0 +1,15 @@
+Leetcode 2126
+
+class Solution {
+public:
+    bool asteroidsDestroyed(int mass, vector<int>& asteroids) {
+        int check=mass;
+        sort(asteroids.begin(), asteroids.end());
+        for (int i=0; i<asteroids.size(); i++) {
+            if (asteroids[i]<=check) check+=asteroids[i];
+            else return false;
+            if (check>asteroids[asteroids.size()-1]) return true;
+        }
+        return true;
+    }
+};
