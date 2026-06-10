@@ -1,0 +1,63 @@
+Leetcode 297
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Codec {
+public:
+    void preorder(TreeNode *root, string &str) {
+        if (root==NULL) {
+            str+="#,"; // null marker for serialization
+            return;
+        }
+        str+=to_string(root->val);
+        str+=','; // node separator for serialization
+        preorder(root->left, str);
+        preorder(root->right, str);
+    }
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        string str="";
+        preorder(root, str);
+        return str;
+    }
+
+    TreeNode* deserializeHelper(queue<string>& q) {
+        if (q.empty()) return NULL;
+        string val = q.front();
+        q.pop();
+        if (val == "#") return NULL;
+        TreeNode* root = new TreeNode(stoi(val));
+        root->left = deserializeHelper(q);
+        root->right = deserializeHelper(q);
+        return root;
+    }
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        // building a queue with data like [1,2,#,#,3,4,7] etc where '#'='NULL'
+        if (data.empty()) return NULL;
+        queue<string> q;
+        string token = "";
+        for (char c : data) {
+            if (c == ',') {
+                if (!token.empty()) {
+                    q.push(token);
+                    token = "";
+                }
+            } else {
+                token += c;
+            }
+        }
+        return deserializeHelper(q);
+    }
+};
+
+// Your Codec object will be instantiated and called as such:
+// Codec ser, deser;
+// TreeNode* ans = deser.deserialize(ser.serialize(root));
