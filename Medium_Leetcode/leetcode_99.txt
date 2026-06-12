@@ -1,0 +1,35 @@
+Leetcode 99
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    void inorderTraverse(TreeNode *root, vector<TreeNode*> &swapped, vector<int> &store, vector<TreeNode*> &nodes) {
+        if (root==NULL) return;
+        inorderTraverse(root->left, swapped, store, nodes);
+        if (!store.empty() && store.back()>root->val) {
+            swapped.push_back(nodes.back());
+            swapped.push_back(root);
+        }
+        store.push_back(root->val);
+        nodes.push_back(root);
+        inorderTraverse(root->right, swapped, store, nodes);
+    }
+
+    void recoverTree(TreeNode* root) {
+        vector<TreeNode*> swapped;
+        vector<int> store;
+        vector<TreeNode*> nodes;
+        inorderTraverse(root, swapped, store, nodes);
+        swap(swapped.front()->val, swapped.back()->val);
+    }
+};
