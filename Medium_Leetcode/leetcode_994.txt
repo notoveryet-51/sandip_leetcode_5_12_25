@@ -1,0 +1,57 @@
+Leetcode 994
+
+class Solution {
+public:
+    int orangesRotting(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int m = grid[0].size();
+        
+        // queue to store {{row, col}, time}
+        queue<pair<pair<int, int>, int>> q;
+        vector<vector<int>> visited(n, vector<int>(m, 0));
+        int totalFresh = 0;
+        
+        // Find all rotten oranges and count of fresh ones initially
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] == 2) {
+                    q.push({{i, j}, 0}); // Push all sources at time 0
+                    visited[i][j] = 2;
+                }
+                if (grid[i][j] == 1) totalFresh++;
+            }
+        }
+        
+        int time = 0;
+        int cntFresh = 0;
+        
+        // Direction vectors for moving: Up, Right, Down, Left
+        int delRow[] = {-1, 0, 1, 0};
+        int delCol[] = {0, 1, 0, -1};
+        
+        while (!q.empty()) {
+            int r = q.front().first.first;
+            int c = q.front().first.second;
+            int t = q.front().second;
+            time = max(time, t);
+            q.pop();
+            
+            // Check all 4 neighbor directions
+            for (int i = 0; i < 4; i++) {
+                int currRow = r + delRow[i]; // move in four directions
+                int currCol = c + delCol[i];
+                
+                // If neighbor is valid, is fresh, and not visited yet
+                if (currRow >= 0 && currRow < n && currCol >= 0 && currCol < m && visited[currRow][currCol] == 0 && grid[currRow][currCol] == 1) {
+                    q.push({{currRow, currCol}, t + 1}); // Increment time
+                    visited[currRow][currCol] = 2; // mark visited
+                    cntFresh++;
+                }
+            }
+        }
+        
+        // If all fresh oranges didn't rot, return -1
+        if (cntFresh != totalFresh) return -1;
+        return time;
+    }
+};
