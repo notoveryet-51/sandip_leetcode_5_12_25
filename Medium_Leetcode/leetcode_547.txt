@@ -1,0 +1,45 @@
+Leetcode 547
+
+class Solution {
+public:
+    void traverseBFS(vector<bool> &visited, vector<vector<int>> adjList, vector<int> &bfs, int start) {
+        queue<int> q;
+        q.push(start);
+        visited[start] = true;
+        while (!q.empty()) {
+            int store = q.front();
+            q.pop();
+            bfs.push_back(store);
+            for (auto it : adjList[store]) {
+                if (!visited[it]) {
+                    q.push(it);
+                    visited[it] = true;
+                }
+            }
+        }
+    }
+
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int V = isConnected.size();
+        vector<vector<int>> adjList(V + 1);
+        // put in adjacency List
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+                if (isConnected[i][j] == 1 && i != j) {
+                    adjList[i + 1].push_back(j + 1);
+                    adjList[j + 1].push_back(i + 1);
+                }
+            }
+        }
+        int countProvince=0;
+        vector<bool> visited(V + 1, false);
+        vector<int> bfs;
+        for (int i = 1; i <= V; i++) {
+            if (!visited[i]) {
+                countProvince++;  // Found a new province
+                traverseBFS(visited, adjList, bfs, i);  // Traverse the entire province
+            }
+        }
+        return countProvince;
+    }
+};
