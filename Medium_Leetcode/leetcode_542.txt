@@ -1,0 +1,60 @@
+Leetcode 542
+
+class Solution {
+public:
+    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+        int n = mat.size();
+        int m = mat[0].size();
+
+        queue<pair<pair<int, int>, int>> q;
+        vector<vector<int>> result;
+
+        result=mat;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (mat[i][j] == 0) {
+                    q.push({{i, j}, 0}); // Push all sources of 0
+                    result[i][j] = -1;
+                }
+                else {
+                    result[i][j] = -2;     // unvisited 1-cell
+                }
+            }
+        }
+
+        // Direction vectors for moving: Up, Right, Down, Left
+        int delRow[] = {-1, 0, 1, 0};
+        int delCol[] = {0, 1, 0, -1};
+
+        while (!q.empty()) {
+            int r = q.front().first.first;
+            int c = q.front().first.second;
+            int cnt=q.front().second;
+            q.pop();
+            
+            // Check all 4 neighbor directions
+            for (int i = 0; i < 4; i++) {
+                int currRow = r + delRow[i]; // move in four directions
+                int currCol = c + delCol[i];
+                
+                // If neighbor is valid and not visited yet
+                if (currRow >= 0 && currRow < n && currCol >= 0 && currCol < m && result[currRow][currCol] == -2) {
+                    q.push({{currRow, currCol}, cnt+1}); 
+                    result[currRow][currCol] = cnt+1; // mark visited in the respective turn
+                }
+            }
+        }
+
+        // converting back to original
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (result[i][j] == -1) {
+                    result[i][j] = 0;
+                }
+            }
+        }
+
+        return result;
+    }
+};
