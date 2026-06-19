@@ -1,0 +1,48 @@
+Leetcode 210
+
+class Solution {
+public:
+    void dfs(int start, vector<bool> &visited, vector<bool> &pathVisited, bool &check, vector<vector<int>> &adj, vector<int> &topoOrder) { 
+        // Turn both visited and pathVisited to true when entering the node
+        visited[start] = true; 
+        pathVisited[start] = true; 
+        
+        for (auto it : adj[start]) { 
+            if (visited[it] == false) { // The visited array helps us skip already fully explored nodes
+                dfs(it, visited, pathVisited, check, adj, topoOrder); 
+                if (check == true) return; 
+            } 
+            else if (pathVisited[it] == true) { // If it is already visited globally, but also path visited, a cycle exists
+                check = true; 
+                return; 
+            } 
+        } 
+        
+        // While backtracking, turn pathVisited back to false, but leave visited as true
+        pathVisited[start] = false; 
+        topoOrder.push_back(start); 
+    }
+
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        // build adjacentList
+        vector<vector<int>> adj(numCourses); 
+        for (int i = 0; i < prerequisites.size(); i++) { 
+            adj[prerequisites[i][1]].push_back(prerequisites[i][0]); 
+        }
+
+        vector<bool> visited(numCourses, false), pathVisited(numCourses, false); 
+        vector<int> topoOrder; 
+        bool check = false; 
+        
+        for (int i = 0; i < numCourses; i++) { 
+            if (visited[i] == false) { 
+                dfs(i, visited, pathVisited, check, adj, topoOrder); 
+            } 
+        }
+
+        // if cycle is detected, courses can't be completed
+        if (check == true) return {};
+        reverse(topoOrder.begin(), topoOrder.end());
+        return topoOrder;
+    }
+};
