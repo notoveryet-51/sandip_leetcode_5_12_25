@@ -1,0 +1,38 @@
+Leetcode 785
+
+class Solution {
+public:
+    void bfs(int start, int V, vector<vector<int>> graph, vector<int> &color, bool &check) {
+        queue<pair<int, int>> q;
+        q.push({start, 0});
+        color[start]=0;
+        while (!q.empty()) {
+            int val=q.front().first;
+            int indication=q.front().second;
+            q.pop();
+            for (auto it: graph[val]) {
+                if (color[it]==-1) {
+                    if (indication==0) color[it]=1;
+                    else color[it]=0;
+                    q.push({it, color[it]});
+                }
+                else if (color[it]==indication) {
+                    check=false; return;
+                } 
+            }
+        }
+    }
+
+    bool isBipartite(vector<vector<int>>& graph) {
+        int V= graph.size();
+        vector<int> color(V, -1);
+        bool check=true;
+        for (int i = 0; i < V; i++) { 
+            if (color[i] == -1) { 
+                bfs(i, V, graph, color, check); 
+                if (!check) return false; 
+            }
+        }
+        return check;
+    }
+};
