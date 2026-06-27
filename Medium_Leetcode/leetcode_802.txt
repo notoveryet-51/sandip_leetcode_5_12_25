@@ -1,0 +1,51 @@
+Leetcode 802
+
+class Solution {
+public:
+    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+        int V= graph.size();
+        vector<vector<int>> revAdj(V); // Adjacency list for the reversed graph
+        vector<int> inDegree(V, 0); 
+        
+        // Reverse the graph and calculate in-degrees
+        for (int i = 0; i < V; i++) {
+            for (auto it : graph[i]) {
+                revAdj[it].push_back(i); // Reverse the edge direction (it -> i)
+                inDegree[i]++;
+            }
+        }
+
+        // Initialize BFS queue with terminal nodes 
+        queue<int> q;
+        for (int i = 0; i < V; i++) {
+            if (inDegree[i] == 0) {
+                q.push(i);
+            }
+        }
+
+        // Standard Kahn's algorithm on the reversed graph
+        vector<bool> isSafe(V, false); // Track which nodes are safe
+        while (!q.empty()) {
+            int node = q.front();
+            q.pop();
+            isSafe[node] = true; // If a node is processed, it's eventually safe
+            
+            for (auto it : revAdj[node]) {
+                inDegree[it]--;
+                if (inDegree[it] == 0) {
+                    q.push(it);
+                }
+            }
+        }
+
+        // Step 4: Collect all safe nodes in ascending order
+        vector<int> safeStates;
+        for (int i = 0; i < V; i++) {
+            if (isSafe[i]) {
+                safeStates.push_back(i);
+            }
+        }
+
+        return safeStates;
+    }
+};
