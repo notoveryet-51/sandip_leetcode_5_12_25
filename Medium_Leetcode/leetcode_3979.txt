@@ -1,0 +1,15 @@
+Leetcode 3979
+
+class Solution {
+public:
+    int maxValidPairSum(vector<int>& nums, int k) {
+        int n=nums.size();
+        long long max_ans = -1;
+        long long max_i = -1;
+        for (int j = k; j < n; ++j) {
+            max_i = max(max_i, (long long)nums[j - k]);
+            max_ans = max(max_ans, max_i + nums[j]);
+        }
+        return max_ans;
+    }
+};
