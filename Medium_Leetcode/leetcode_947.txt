@@ -1,0 +1,86 @@
+Leetcode 947
+
+class DisjointSet {
+public:
+    vector<int> parent, size;
+
+    // Constructor
+    DisjointSet(int n) {
+        parent.resize(n + 1);
+        size.resize(n + 1);
+        for (int i = 0; i <= n; i++) {
+            parent[i] = i;
+            size[i] = 1;
+        }
+    }
+    
+    // Function to find ultimate parent
+    int findUPar(int node) {
+        if (node == parent[node])
+            return node;
+        return parent[node] = findUPar(parent[node]);
+    }
+    
+    // Function to implement union by size
+    void unionBySize(int u, int v) {
+        int ulp_u = findUPar(u);
+        int ulp_v = findUPar(v);
+        if (ulp_u == ulp_v) return;
+        if (size[ulp_u] < size[ulp_v]) {
+            parent[ulp_u] = ulp_v;
+            size[ulp_v] += size[ulp_u];
+        }
+        else {
+            parent[ulp_v] = ulp_u;
+            size[ulp_u] += size[ulp_v];
+        }
+    }
+};
+
+class Solution {
+public:
+    int removeStones(vector<vector<int>>& stones) {
+        int n=stones.size();
+        
+        // To store the maximum row and column having a stone 
+        int maxRow = 0;
+        int maxCol = 0;
+        
+        // Iterate on all the nodes
+        for (auto it : stones) {
+            maxRow = max(maxRow, it[0]);
+            maxCol = max(maxCol, it[1]);
+        }
+        
+        DisjointSet ds(maxRow + maxCol + 1);
+        
+        // To store the nodes having a stone in Disjoint Set
+        unordered_map<int, int> stoneNodes;
+        
+        // Iterate on all stones
+        for (auto it : stones) {
+            
+            int nodeRow = it[0];
+            int nodeCol = it[1] + maxRow + 1;
+            ds.unionBySize(nodeRow, nodeCol);
+            
+            // Add the nodes to the map
+            stoneNodes[nodeRow] = 1;
+            stoneNodes[nodeCol] = 1;
+        }
+        
+        // To store the number of connected components
+        int k = 0;
+        
+        // Iterate on the set
+        for (auto it : stoneNodes) {
+            
+            // Increment the count if a new component is found 
+            if (ds.findUPar(it.first) == it.first) {
+                k++;
+            }
+        }
+        
+        return n - k;
+    }
+};
