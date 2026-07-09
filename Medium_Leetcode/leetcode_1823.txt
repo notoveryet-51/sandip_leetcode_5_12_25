@@ -1,0 +1,30 @@
+Leetcode 1823
+
+class Solution {
+public:
+    int nextIndex=0;
+    vector<bool> visited; 
+    int helperFunc(vector<bool> &visited, int idx, int k, int n) {
+        int count=0;
+        while (count!=k) {
+            if (!visited[idx%n]) count++; 
+            idx++;
+        }
+        idx--; 
+        visited[idx%n]=true; 
+        return (idx + 1) % n; 
+    }
+
+    int findTheWinner(int n, int k) {
+        if (visited.empty()) visited.resize(n, false); 
+        int visitedCount = 0;
+        for (bool v : visited) if (v) visitedCount++;
+        if (visitedCount == n - 1) {
+            for (int i = 0; i < n; i++) {
+                if (!visited[i]) return i + 1;
+            }
+        }
+        nextIndex=helperFunc(visited, nextIndex, k, n);
+        return findTheWinner(n, k); 
+    }
+};
