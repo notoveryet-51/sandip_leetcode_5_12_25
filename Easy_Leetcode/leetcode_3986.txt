@@ -1,0 +1,18 @@
+Leetcode 3986
+
+class Solution {
+public:
+    int secondsBetweenTimes(string startTime, string endTime) {
+        int startHour, startMin, startSec;
+        int endHour, endMin, endSec;
+        startHour=stoi(startTime.substr(0,2));
+        startMin=stoi(startTime.substr(3,2));
+        startSec=stoi(startTime.substr(6,2));
+        endHour=stoi(endTime.substr(0,2));
+        endMin=stoi(endTime.substr(3,2));
+        endSec=stoi(endTime.substr(6,2));
+        int endTotal=endHour*3600+endMin*60+endSec;
+        int startTotal=startHour*3600+startMin*60+startSec;
+        return endTotal-startTotal;
+    }
+};
