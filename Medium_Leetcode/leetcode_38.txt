@@ -1,0 +1,27 @@
+Leetcode 38
+
+class Solution {
+public:
+    string hashCount(string &s) {
+        string str="";
+        int count=1;
+        for (int i=1; i<s.length(); i++) {
+            if (s[i]==s[i-1]) {
+                count++;
+            } else {
+                str+=to_string(count)+s[i-1];
+                count=1;
+            }
+        }
+        if (!s.empty()) str+=to_string(count)+s.back();
+        return str;
+    }
+    string countAndSay(int n) {
+        if (n==1) return "1";
+        string s="1";
+        for (int i=1; i<n; i++) {
+            s=hashCount(s);
+        }
+        return s;
+    }
+};
