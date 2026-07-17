@@ -1,0 +1,26 @@
+Leetcode 846
+
+class Solution {
+public:
+    bool isNStraightHand(vector<int>& hand, int groupSize) {
+        if (hand.size() % groupSize != 0) return false;
+        map<int, int> freq;
+        for (int card : hand) freq[card]++;
+        for (auto it : freq) { 
+            int card = it.first;
+            int count = it.second;
+            // If this card still has occurrences
+            if (count > 0) {
+                // Start a new group
+                for (int i = 1; i < groupSize; i++) {
+                    // If consecutive card missing or insufficient
+                    if (freq[card + i] < count)
+                        return false;
+                    // Reduce the frequency for next cards
+                    freq[card + i] -= count;
+                }
+            }
+        }
+        return true;
+    }
+};
