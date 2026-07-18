@@ -1,0 +1,44 @@
+Leetcode 295
+
+class MedianFinder {
+    priority_queue<int> max_q; // Stores the smaller half (Max-Heap)
+    priority_queue<int, vector<int>, greater<int>> min_q; // Stores the larger half (Min-Heap)
+public:
+    MedianFinder() {
+        
+    }
+    
+    void addNum(int num) {
+        // Insert dynamically while maintaining the heap properties and balance
+        if (max_q.empty() || num <= max_q.top()) {
+            max_q.push(num);
+        } else {
+            min_q.push(num);
+        }
+
+        // Rebalance heaps if their size difference exceeds 1
+        if (max_q.size() > min_q.size() + 1) {
+            min_q.push(max_q.top());
+            max_q.pop();
+        } else if (min_q.size() > max_q.size()) {
+            max_q.push(min_q.top());
+            min_q.pop();
+        }
+    }
+    
+    double findMedian() {
+        // Extract the median in O(1) time from the tops of the balanced heaps
+        if (max_q.size() > min_q.size()) {
+            return max_q.top();
+        } else {
+            return (max_q.top() + min_q.top()) / 2.0;
+        }
+    }
+};
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder* obj = new MedianFinder();
+ * obj->addNum(num);
+ * double param_2 = obj->findMedian();
+ */
