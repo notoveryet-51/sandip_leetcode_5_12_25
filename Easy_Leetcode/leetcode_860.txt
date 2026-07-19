@@ -1,0 +1,29 @@
+Leetcode 860
+
+class Solution {
+public:
+    bool lemonadeChange(vector<int>& bills) {
+        int n=bills.size();
+        int bill5=0, bill10=0;
+        int change=0;
+        for (int i=0; i<n; i++) {
+            if (bills[i]==5) bill5++;
+            else if (bills[i]==10) {
+                bill10++;
+                if (bill5==0) return false; 
+                else bill5--;
+            }
+            else {
+                if (bill10>0 && bill5>0) { // if $10 and $5 bills available
+                    bill10--;
+                    bill5--;
+                } else if (bill5>=3) { // if no $10 bill available
+                    bill5-=3;
+                } else {    // if none of the bills are available 
+                    return false;
+                }
+            } 
+        }
+        return true;
+    }
+};
