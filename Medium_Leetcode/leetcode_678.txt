@@ -1,0 +1,22 @@
+Leetcode 678
+
+class Solution {
+public:
+    bool checkValidString(string s) {
+        int mnOpen=0, mxOpen=0;
+        for (int i=0; i<s.size(); i++) {
+            if (s[i]=='(') {
+                mxOpen++;   mnOpen++;
+            }
+            else if (s[i]==')') {
+                mxOpen--;   mnOpen--;
+            }
+            else {
+                mxOpen++;   mnOpen--;
+            }
+            if (mxOpen<0) return false;
+            if (mnOpen<0) mnOpen=0;
+        }
+        return mnOpen==0;
+    }
+};
