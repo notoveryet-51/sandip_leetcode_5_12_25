@@ -1,0 +1,16 @@
+Leetcode 3993
+
+using ll=long long;
+class Solution {
+public:
+    long long maximumValue(int n, int s, int m) {
+        if (n==1) return (ll)s;
+        ll mTimes=n/2;
+        ll add=s+m*mTimes;
+        ll sub;
+        if (n%2==1) sub=n/2;
+        else sub=n/2-1;
+        if (n%2==1) return add-sub+1;
+        else return add-sub;
+    }
+}; 
