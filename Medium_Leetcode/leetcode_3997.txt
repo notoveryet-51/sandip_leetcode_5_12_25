@@ -1,0 +1,41 @@
+Leetcode 3997
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int getSubtreeMax(TreeNode* root) {
+        if (root==nullptr) return 0;
+        return max({root->val, getSubtreeMax(root->left), getSubtreeMax(root->right)});
+    }
+    void countDominant(TreeNode *root, int &count2) {
+        if (root==NULL) return;
+        if (root->right!=nullptr || root->left!=nullptr) if (root->val >= getSubtreeMax(root->left) && root->val >= getSubtreeMax(root->right)) count2++;
+        countDominant(root->left, count2);
+        countDominant(root->right, count2);
+    }
+    void countLeaves(TreeNode *root, int &count1) {
+        if (root==NULL) return;
+        if (root->left==NULL && root->right==NULL) {
+            count1++;
+        }
+        countLeaves(root->left, count1);
+        countLeaves(root->right, count1);
+    }
+    int countDominantNodes(TreeNode* root) {
+        int count1=0;
+        countLeaves(root, count1);
+        int count2=0;
+        countDominant(root, count2);
+        return count1+count2;
+    }
+};
