@@ -1,0 +1,35 @@
+Leetcode 62
+
+class Solution {
+public:
+    void helperFunction(int &count, int endX, int endY, int m, int n, vector<vector<int>> &dp) {
+        if (endX == m - 1 && endY == n - 1) {
+            count++;
+            return;
+        }
+
+        // Check bounds
+        if (endX <= m - 1 && endY <= n - 1) {
+            if (dp[endX][endY] != -1) { // Added memoization lookup
+                count += dp[endX][endY];
+                return;
+            }
+
+            int countBefore = count; // Added tracker for paths found in sub-calls
+
+            // Explore moving down
+            helperFunction(count, endX + 1, endY, m, n, dp);
+            // Explore moving right
+            helperFunction(count, endX, endY + 1, m, n, dp);
+
+            dp[endX][endY] = count - countBefore; // Added state save
+        }
+    }
+
+    int uniquePaths(int m, int n) {
+        int count = 0;
+        vector<vector<int>> dp(m, vector<int>(n, -1));
+        helperFunction(count, 0, 0, m, n, dp);
+        return count;
+    }
+};
