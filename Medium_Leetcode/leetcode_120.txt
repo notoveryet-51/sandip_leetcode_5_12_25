@@ -1,0 +1,26 @@
+Leetcode 120
+
+class Solution {
+public:
+    int helperFunction(int row, int col, vector<vector<int>> &triangle, int n, int m, vector<vector<int>> &dp) {
+        if (col >= triangle[row].size()) {
+            return 1e9; 
+        }
+        if (row == n - 1) {
+            return triangle[row][col];
+        }
+        if (dp[row][col] != INT_MAX) {
+            return dp[row][col];
+        }
+        int down= helperFunction(row + 1, col, triangle, n, m, dp);
+        int downRight= helperFunction(row + 1, col + 1, triangle, n, m, dp);
+        return dp[row][col] = triangle[row][col] + min(down, downRight);
+    }
+
+    int minimumTotal(vector<vector<int>>& triangle) {
+        int n = triangle.size();
+        int m = triangle[n-1].size();
+        vector<vector<int>> dp(n, vector<int>(m, INT_MAX));
+        return helperFunction(0, 0, triangle, n, m, dp);
+    }
+};
