@@ -1,0 +1,21 @@
+Leetcode 64
+
+class Solution {
+public:
+    int helperFunction(vector<vector<int>>& grid, int idxX, int idxY, vector<vector<int>> &dp) { 
+        if (idxX >= grid.size() || idxY >= grid[0].size()) return INT_MAX;
+        if (idxX == grid.size() - 1 && idxY == grid[0].size() - 1) return grid[idxX][idxY];
+        if (dp[idxX][idxY]!=-1) return dp[idxX][idxY];
+        int right = helperFunction(grid, idxX, idxY + 1, dp); 
+        int down = helperFunction(grid, idxX + 1, idxY, dp);  
+        int minNext = min(right, down);
+        int res = (minNext == INT_MAX) ? INT_MAX : grid[idxX][idxY] + minNext; 
+        return dp[idxX][idxY]=res;
+    }
+
+    int minPathSum(vector<vector<int>>& grid) {
+        int m=grid.size(), n=grid[0].size();
+        vector<vector<int>> dp(m, vector<int>(n ,-1));
+        return helperFunction(grid, 0, 0, dp); 
+    }
+};
