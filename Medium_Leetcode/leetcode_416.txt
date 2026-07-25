@@ -1,0 +1,22 @@
+Leetcode 416
+
+class Solution {
+public:
+    bool helperFunction(vector<int> &nums, int target, int sum, int index, vector<vector<int>> &dp) {
+        if (sum == target) return true;
+        if (sum > target || index >= nums.size()) return false;
+        if (dp[index][sum] != -1) return dp[index][sum];
+        bool include = helperFunction(nums, target, sum + nums[index], index + 1, dp);
+        bool exclude = helperFunction(nums, target, sum, index + 1, dp);
+        return dp[index][sum] = (include || exclude);
+    }
+
+    bool canPartition(vector<int>& nums) {
+        int sum=0; int n=nums.size();
+        for (int i=0; i<nums.size(); i++) sum+=nums[i];
+        if (sum%2==1) return false;
+        sum/=2;
+        vector<vector<int>> dp(n, vector<int>(sum+1, -1));
+        return helperFunction(nums, sum, 0, 0, dp);
+    }
+};
