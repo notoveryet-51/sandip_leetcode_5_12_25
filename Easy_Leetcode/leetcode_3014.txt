@@ -1,0 +1,12 @@
+Leetcode 3014
+
+class Solution {
+public:
+    int minimumPushes(string word) {
+        if (word.size()<=8) return word.size();
+        if (word.size()<=16) return 8+2*(word.size()-8);
+        if (word.size()<=24) return 8+2*8+3*(word.size()-16);
+        if (word.size()>24) return 8+2*8+3*8+4*(word.size()-24);
+        return -1;
+    }
+};
