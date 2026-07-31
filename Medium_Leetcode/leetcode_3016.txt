@@ -1,0 +1,26 @@
+Leetcode 3016
+
+class Solution {
+public:
+    int freqCount(int word[], int limit) {
+        int sum=0;
+        for (int i=0; i<26 && i<limit; i++) {
+            sum+=word[i];
+        }
+        return sum;
+    }
+    int minimumPushes(string s) {
+        int word[26]={0};
+        for (int i=0; i<s.size(); i++) word[s[i]-'a']++;
+        int count=0;
+        for (int i=0; i<26; i++) if (word[i]!=0) count++;
+        sort(word, word+26, greater<int>());
+        if (count<=8) {
+            return freqCount(word, count)*1;
+        }
+        if (count<=16) return freqCount(word, 8)*1+freqCount(word+8, count-8)*2;
+        if (count<=24) return freqCount(word, 8)*1+freqCount(word+8, 8)*2+freqCount(word+16, count-16)*3;
+        if (count>24) return freqCount(word, 8)*1+freqCount(word+8, 8)*2+freqCount(word+16, 8)*3+freqCount(word+24, count-24)*4;
+        return -1;
+    }
+};
