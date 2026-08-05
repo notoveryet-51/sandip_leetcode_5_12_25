@@ -1,0 +1,44 @@
+Leetcode 3310
+
+class Solution {
+public:
+    vector<int> remainingMethods(int n, int k, vector<vector<int>>& invocations) {
+        vector<vector<int>> adj(n);
+        queue<int> q;
+        vector<int> visited(n, 0);
+        for (int i=0; i<invocations.size(); i++) {
+            adj[invocations[i][0]].push_back(invocations[i][1]);
+        } 
+        // mark all the suspicious ones
+        q.push(k);
+        visited[k]=1;
+        while (!q.empty()) {
+            int i=q.front();
+            q.pop();
+            for (auto it: adj[i]) {
+                if (!visited[it]) {
+                    visited[it]=1;
+                    q.push(it);
+                }
+            }
+            
+        }
+        // if non-suspicious invokes suspicious
+        bool canRemove = true;
+        for (auto inv : invocations) {
+            int u = inv[0], v = inv[1];
+            if (!visited[u] && visited[v]) { 
+                canRemove = false;
+                break;
+            }
+        }
+        // colect remaining methods
+        vector<int> result;
+        for (int i = 0; i < n; i++) {
+            if (!canRemove || !visited[i]) { 
+                result.push_back(i);
+            }
+        }
+        return result;
+    }
+};
