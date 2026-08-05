@@ -35,3 +35,21 @@ public:
         return vec;
     }
 };
+
+
+class Solution {
+public:
+    void helperFunction(string temp, int count, int n, vector<string> &s) {
+        if (n==count) {
+            if (temp.size()==n) s.push_back(temp);
+            return;
+        }
+        helperFunction(temp+'1', count+1, n, s);
+        if (temp.empty() || temp.back()=='1') helperFunction(temp+'0', count+1, n, s);
+    }
+    vector<string> validStrings(int n) {
+        vector<string> s;
+        helperFunction("", 0, n, s);
+        return s;
+    }
+};
