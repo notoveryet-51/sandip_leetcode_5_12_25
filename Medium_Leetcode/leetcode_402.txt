@@ -1,0 +1,42 @@
+Leetcode 402
+
+class Solution {
+public:
+    string removeKdigits(string nums, int k) {
+        int n = nums.size();
+        stack<char> s; // Changed type to char to work directly with string characters
+
+        for (int i = 0; i < n; i++) {
+            // Pop larger digits while k > 0 to build the smallest possible number
+            while (!s.empty() && k > 0 && s.top() > nums[i]) {
+                s.pop();
+                k--; // Decrement k for each removed digit
+            }
+            s.push(nums[i]); // Push current character directly
+        }
+
+        // If k is still greater than 0, pop remaining digits from the top
+        while (k > 0 && !s.empty()) {
+            s.pop();
+            k--;
+        }
+
+        // Reconstruct result string from stack
+        string res = "";
+        while (!s.empty()) {
+            res.push_back(s.top());
+            s.pop();
+        }
+        reverse(res.begin(), res.end());
+
+        // Strip leading zeros
+        int start = 0;
+        while (start < res.size() && res[start] == '0') {
+            start++;
+        }
+        res = res.substr(start);
+
+        // Handle edge case where result is empty
+        return res.empty() ? "0" : res;
+    }
+};
