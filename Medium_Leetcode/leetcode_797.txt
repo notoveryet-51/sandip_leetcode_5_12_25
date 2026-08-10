@@ -1,0 +1,23 @@
+Leetcode 797
+
+class Solution {
+public:
+    void dfsHelper(int start, vector<vector<int>>& graph, vector<vector<int>> &result, vector<int> &temp)  {
+        if (start==graph.size()-1) {
+            result.push_back(temp); return;
+        }
+        for (auto it: graph[start]) {
+            temp.push_back(it);
+            dfsHelper(it, graph, result, temp);
+            temp.pop_back();
+        }
+    }
+    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
+        int n=graph.size();
+        vector<vector<int>> result;
+        vector<int> temp;
+        temp.push_back(0);
+        dfsHelper(0, graph, result, temp);
+        return result;
+    }
+};
