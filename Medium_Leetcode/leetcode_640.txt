@@ -1,0 +1,72 @@
+Leetcode 640
+
+class Solution {
+public:
+    bool isNumber (char c) {
+        if (c=='1' || c=='2' || c=='3' || c=='4' || c=='5' || c=='6' || c=='7' || c=='8' || c=='9' || c=='0') return true;
+        return false;
+    }
+
+    // Helper parser 
+    void parse(const string& side, int& countX, int& countSum) {
+        int i = 0, len = side.size();
+        while (i < len) {
+            int sign = 1;
+            if (side[i] == '+') {
+                sign = 1;
+                i++;
+            } else if (side[i] == '-') {
+                sign = -1;
+                i++;
+            }
+            int j = i;
+            while (j < len && isNumber(side[j])) {
+                j++;
+            }
+            if (j < len && side[j] == 'x') {
+                int coeff = (i == j) ? 1 : stoi(side.substr(i, j - i));
+                countX += sign * coeff;
+                i = j + 1;
+            } else {
+                int val = stoi(side.substr(i, j - i));
+                countSum += sign * val;
+                i = j;
+            }
+        }
+    }
+
+    string solveEquation(string s) {
+        int n=s.size();
+        string left="";
+        string right="";
+        int idx=0;
+        while (s[idx]!='=') {
+            left+=s[idx];
+            idx++;
+        }
+        idx++;
+        while (idx<n) {
+            right+=s[idx];
+            idx++;
+        }
+        // Parse left expression
+        int leftCountX=0;
+        int leftCountSum=0;
+        parse(left, leftCountX, leftCountSum);
+
+        // Parse right expression
+        int rightCountX=0;
+        int rightCountSum=0;
+        parse(right, rightCountX, rightCountSum);
+
+        int totalX = leftCountX - rightCountX;
+        int totalSum = rightCountSum - leftCountSum;
+
+        if (totalX == 0) {
+            if (totalSum == 0) return "Infinite solutions";
+            return "No solution";
+        }
+
+        return "x=" + to_string(totalSum / totalX);
+    }
+};
