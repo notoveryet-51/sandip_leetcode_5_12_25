@@ -1,0 +1,15 @@
+Leetcode 3702
+
+class Solution {
+public:
+    int longestSubsequence(vector<int>& nums) {
+        int n=nums.size();
+        bool check =true;
+        int bitWiseSum=0;
+        for (auto it: nums) bitWiseSum^=it;
+        if (bitWiseSum!=0) return n;
+        for (auto it: nums) if (it!=0) check=false;
+        if (!check) return n-1;
+        else return 0;
+    }
+};
