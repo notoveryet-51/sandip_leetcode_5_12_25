@@ -1,0 +1,15 @@
+Leetcode 1413 
+
+class Solution {
+public:
+    int minStartValue(vector<int>& nums) {
+        int minimumNegative=INT_MAX;
+        int sum=0;
+        int n=nums.size();
+        for (int i=0; i<n; i++) {
+            sum+=nums[i];
+            minimumNegative=min(sum, minimumNegative);
+        }
+        return minimumNegative>0 ? 1 : abs(minimumNegative)+1;
+    }
+};
