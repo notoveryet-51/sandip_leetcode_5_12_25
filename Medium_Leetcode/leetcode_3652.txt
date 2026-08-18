@@ -1,0 +1,29 @@
+Leetcode 3652
+
+using ll=long long;
+class Solution {
+public:
+    long long maxProfit(vector<int>& prices, vector<int>& strategy, int k) {
+        ll totalPro=0;
+        ll n=prices.size(); 
+        for (ll i=0; i<n; i++) totalPro+=(1LL*prices[i]*strategy[i]);
+        // modifications strategy
+        ll left=0, right=0;
+        ll actualProfit=0, modifiedProfit=0;
+        while (right<k) {   // precomputation of k size window
+            actualProfit+=(1LL*prices[right]*strategy[right]);
+            if (right>=k/2)  modifiedProfit+=prices[right];
+            right++;
+        }
+        ll mxProfit=(modifiedProfit-actualProfit);
+        while (right<n) {
+            actualProfit-=(1LL*prices[left]*strategy[left]);
+            actualProfit+=(1LL*prices[right]*strategy[right]);
+            modifiedProfit-=(prices[left+k/2]);
+            modifiedProfit+=(prices[right]);
+            left++; right++;
+            mxProfit=max(mxProfit, modifiedProfit-actualProfit);
+        }
+        return totalPro+max(0LL, mxProfit);
+    }
+};
