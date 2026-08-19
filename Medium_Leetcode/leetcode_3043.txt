@@ -1,0 +1,25 @@
+Leetcode 3043
+
+class Solution {
+public:
+    int longestCommonPrefix(vector<int>& arr1, vector<int>& arr2) {
+        int n1=arr1.size(), n2=arr2.size();
+        int maxLen=INT_MIN;
+        unordered_map<string, int> mp;
+        for (auto it: arr1) {
+            string s=to_string(it);
+            for (int i=1; i<=s.length(); i++) {
+                mp[s.substr(0, i)]++;
+            }
+        }
+        for (auto it: arr2) {
+            string s=to_string(it);
+            for (int i=1; i<=s.length(); i++) {
+                if (mp.find(s.substr(0, i))!=mp.end()) {
+                    maxLen=max(maxLen, i);
+                 } else continue;
+            }
+        }
+        return maxLen==INT_MIN ? 0 : maxLen;
+    }
+};
