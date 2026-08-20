@@ -1,0 +1,26 @@
+Leetcode 1386
+
+class Solution {
+public:
+    int maxNumberOfFamilies(int n, vector<vector<int>>& reservedSeats) {
+        unordered_map<int, vector<int>> adjList; 
+        for (int i=0; i<reservedSeats.size(); i++) {
+            adjList[reservedSeats[i][0]].push_back(reservedSeats[i][1]);
+        }
+        int count = (n - (int)adjList.size()) * 2;
+        for (auto& row : adjList) { 
+            bool left = true, middle = true, right = true;
+            for (auto it: row.second) { 
+                if (it >= 2 && it <= 5) left = false;
+                if (it >= 4 && it <= 7) middle = false;
+                if (it >= 6 && it <= 9) right = false;
+            }
+            if (left && right) { 
+                count += 2;
+            } else if (left || right || middle) {
+                count += 1;
+            }
+        }
+        return count;
+    }
+};
