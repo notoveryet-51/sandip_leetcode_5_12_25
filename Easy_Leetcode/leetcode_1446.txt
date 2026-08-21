@@ -1,0 +1,20 @@
+Leetcode 1446
+
+class Solution {
+public:
+    int maxPower(string s) {
+        int n=s.size();
+        if (n==1) return 1;
+        int len=1;
+        int maxLen=INT_MIN;
+        for (int i=0; i<n-1; i++) {
+            if (s[i]==s[i+1]) len++;
+            else {
+                maxLen=max(len, maxLen);
+                len=1;
+            }
+        }
+        maxLen=max(len, maxLen);
+        return maxLen;
+    }
+};
