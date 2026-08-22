@@ -1,0 +1,16 @@
+Leetcode 3622
+
+class Solution {
+public:
+    bool checkDivisibility(int n) {
+        int cpy=n;
+        int sum=0, pro=1;
+        while (cpy>0) {
+            int dig=cpy%10;
+            sum+=dig;
+            pro*=dig;
+            cpy/=10;
+        }
+        return (n%(sum+pro)==0);
+    }
+};
