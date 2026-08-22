@@ -1,0 +1,29 @@
+Leetcode 2596
+
+class Solution {
+public:
+    bool checkValidGrid(vector<vector<int>>& grid) {
+        if (grid[0][0]!=0) return false; 
+        int n=grid.size(), m=grid[0].size();
+        int row=0, col=0;
+        // possible movements
+        vector<int> delRow={-1, -2, 1, 2, 2, 1, -2, -1};
+        vector<int> delCol={2, 1, 2, 1, -1, -2, -1, -2};
+        for (int step = 1; step < n * m; step++) { 
+            bool foundNext = false; 
+            for (int i=0; i<8; i++) {
+                int currRow=row+delRow[i];
+                int currCol=col+delCol[i];
+                if (currRow>=0 && currRow<n && currCol>=0 && currCol<m) {
+                    if (grid[currRow][currCol] == step) { 
+                        row=currRow; col=currCol;
+                        foundNext = true;
+                        break; 
+                    }
+                }
+            }
+            if (!foundNext) return false; 
+        }
+        return true;
+    }
+};
