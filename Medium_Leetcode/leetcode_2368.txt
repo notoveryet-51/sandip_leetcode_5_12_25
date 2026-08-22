@@ -1,0 +1,33 @@
+Leetcode 2368
+
+class Solution {
+public:
+    bool checkValidity(vector<bool>& isRestricted, int node) {
+        return !isRestricted[node];
+    }
+    void dfsHelper(int start, vector<int> &visited, int &nodeCount, vector<vector<int>> &adjList, vector<bool>& isRestricted) {
+        for (auto it: adjList[start]) {
+            if (checkValidity(isRestricted, it) && !visited[it]) {
+                visited[it]=1;
+                nodeCount++;
+                dfsHelper(it, visited, nodeCount, adjList, isRestricted);
+            }
+        }
+    }
+    int reachableNodes(int n, vector<vector<int>>& edges, vector<int>& restricted) {
+        vector<vector<int>> adjList(n);
+        for (int i=0; i<edges.size(); i++) {
+            adjList[edges[i][0]].push_back(edges[i][1]);
+            adjList[edges[i][1]].push_back(edges[i][0]);
+        }
+        vector<bool> isRestricted(n, false);
+        for (int node : restricted) {
+            isRestricted[node] = true;
+        }
+        vector<int> visited(n, 0);
+        int nodeCount=1;
+        visited[0]=1;
+        dfsHelper(0, visited, nodeCount, adjList, isRestricted);
+        return nodeCount;
+    }
+};
