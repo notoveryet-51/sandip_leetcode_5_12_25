@@ -1,0 +1,30 @@
+Leetcode 4031
+
+class Solution {
+public:
+    vector<vector<int>> findDisappearedNumbers(vector<int>& nums, int lower, int upper) {
+        sort(nums.begin(), nums.end());
+        int i=0;
+        int n=nums.size();
+        vector<int> temp; long long curr=lower;
+        vector<vector<int>> result;
+        while (i<n && nums[i]<=upper) {
+            while (i<n && nums[i]<curr) i++;
+            if (i>=n || nums[i]>upper) {
+                break;
+            }
+            if (nums[i]>curr) {
+                temp.push_back(curr);
+                temp.push_back(nums[i]-1);
+                result.push_back(temp);
+                temp.clear();
+            }
+            curr=(long long)nums[i]+1;
+            i++;
+        }
+        if (upper>=curr) {
+            result.push_back({(int)curr, upper});
+        }
+        return result;
+    }
+};
