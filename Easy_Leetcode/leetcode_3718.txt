@@ -1,0 +1,18 @@
+Leetcode 3718
+
+class Solution {
+public:
+    int missingMultiple(vector<int>& nums, int k) {
+        int n=nums.size();
+        sort(nums.begin(), nums.end());
+        int temp=k;
+        int i=0;
+        while (i<n) {
+            if (temp!=nums[i]) i++;
+            else {
+                i++; temp+=k;
+            }
+        }
+        return temp;
+    }
+};
