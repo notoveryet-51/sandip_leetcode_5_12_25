@@ -1,0 +1,35 @@
+Leetcode 2904
+
+class Solution {
+public:
+    string shortestBeautifulSubstring(string s, int k) {
+        int n=s.size();
+        int minLen=INT_MAX;
+        int count1=0;
+        int i=0, j=0;
+        int idxX=-1;
+        string ans="";
+        while (j<n) {
+            if (s[j]=='1') count1++;
+            // fix the count
+            while (count1>k) {
+                if (s[i]=='1') count1--;
+                i++;
+            }
+            // avoid trailing 0s
+            while (count1==k) {
+                if (s[i]=='0') i++;
+                else if (s[i]=='1') break;
+            }
+            if (count1==k) {
+                string sub=s.substr(i, j-i+1); 
+                if (j-i+1<minLen || (j-i+1==minLen && sub<ans)) { // sub<ans checks lexicographic order
+                    minLen=j-i+1;
+                    ans=sub;
+                }
+            }
+            j++;
+        }
+        return ans;
+    }
+};
