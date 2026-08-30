@@ -1,0 +1,35 @@
+Leetcode 2091
+
+class Solution {
+public:
+    int minimumDeletions(vector<int>& nums) {
+        int idxLarge=-1;
+        int idxSmall=-1;
+        int large=INT_MIN;
+        int small=INT_MAX;
+        int n=nums.size();
+        for (int i=0; i<n; i++) {
+            if (nums[i]>large) {
+                large=nums[i];  idxLarge=i;
+            }
+            if (nums[i]<small) {
+                small=nums[i]; idxSmall=i;
+            }
+        }
+        // isolated case
+        if (idxSmall==idxLarge) {
+            return min(n-idxLarge, idxLarge+1);
+        }
+        // final case
+        int gapLarge=min(n-idxLarge, idxLarge+1);
+        int gapSmall=min(n-idxSmall, idxSmall+1);
+        int largeComparator, smallComparator;
+        if (idxLarge>idxSmall)  {
+            largeComparator=idxLarge; smallComparator=idxSmall;
+        }
+        else {
+            largeComparator=idxSmall;   smallComparator=idxLarge;
+        }
+        return min({gapLarge+gapSmall, largeComparator+1, n-smallComparator});
+    }
+};
