@@ -1,0 +1,36 @@
+Leetcode 2058
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> nodesBetweenCriticalPoints(ListNode* head) {
+        ListNode *temp=head, *prev=nullptr, *then=nullptr;
+        vector<int> indices;
+        int count=1;
+        while (temp->next!=nullptr and temp->next->next!=nullptr) {
+            prev=temp;
+            temp=temp->next;
+            count++;
+            then=temp->next;
+            if (temp->val>prev->val and temp->val>then->val or temp->val<prev->val and temp->val<then->val) indices.push_back(count);
+        }
+        sort(indices.begin(), indices.end());
+        if (indices.size()<2) return {-1, -1};
+        int n=indices.size();
+        int minDistance=INT_MAX, maxDistance=INT_MIN;
+        for (int i=0; i<n-1; i++) {
+            minDistance=min(minDistance, indices[i+1]-indices[i]);
+        }
+        maxDistance=indices[n-1]-indices[0];
+        return {minDistance, maxDistance};
+    }
+};
