@@ -1,0 +1,16 @@
+Leetcode 2216
+
+class Solution {
+public:
+    int minDeletion(vector<int>& nums) {
+        int n=nums.size();
+        int deletions=0;
+        for (int i=0; i<n-1; i++) {
+            int shiftedIndex=i-deletions;
+            if (shiftedIndex%2==0 && nums[i]==nums[i+1]) deletions++;
+        }
+        // if still the length of array is odd after all deletions, delete one more to match criteria of even size
+        if ((n-deletions)%2!=0) deletions++;
+        return deletions;
+    }
+};
