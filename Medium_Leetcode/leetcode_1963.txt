@@ -1,0 +1,15 @@
+Leetcode 1963
+
+class Solution {
+public:
+    int minSwaps(string s) {
+        int balance=0;
+        int maxImBalance=0;
+        for (auto it: s) {
+            if (it=='[') balance++;
+            else balance--;
+            if (balance<0)  maxImBalance=max(maxImBalance, -balance);
+        }
+        return (maxImBalance+1)/2;
+    }
+};
