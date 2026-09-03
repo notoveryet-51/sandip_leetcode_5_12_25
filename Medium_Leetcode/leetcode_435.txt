@@ -1,0 +1,30 @@
+Leetcode 435
+
+class Solution {
+public:
+    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+        int n=intervals.size();
+        if (n==1) return 0;
+        int count=0;
+        sort(intervals.begin(), intervals.end());
+        int i=0, j=i+1;
+        while (j<n) {
+            int currStart=intervals[i][0], currEnd=intervals[i][1], nextStart=intervals[j][0], nextEnd=intervals[j][1];
+            // overlapping
+            if (currEnd>nextStart) {
+                // case1
+                if (currEnd<=nextEnd) {
+                    j++; count++; // we remove the next index as it would mess up some other index in later progress
+                }
+                else {
+                    i++;
+                }
+            }
+            // non-overlapping
+            else {
+                i=j;    j++;
+            }
+        }
+        return count;
+    }
+};
