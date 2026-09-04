@@ -1,0 +1,28 @@
+Leetcode 1656
+
+class OrderedStream {
+public:
+    int len;
+    int pointer=1;
+    vector<string> p;
+    OrderedStream(int n) {
+        len=n;
+        p.resize(len+1, "");
+    }
+    
+    vector<string> insert(int idKey, string value) {
+        p[idKey]=value;
+        vector<string> result;
+        while (pointer<=len && p[pointer]!="") {
+            result.push_back(p[pointer]);
+            pointer++;
+        }
+        return result;
+    }
+};
+
+/**
+ * Your OrderedStream object will be instantiated and called as such:
+ * OrderedStream* obj = new OrderedStream(n);
+ * vector<string> param_1 = obj->insert(idKey,value);
+ */
