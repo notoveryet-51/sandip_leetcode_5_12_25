@@ -1,0 +1,39 @@
+Leetcode 1472
+
+class BrowserHistory {
+public:
+    vector<string> historyURL;
+    int pointer=0;
+    BrowserHistory(string homepage) {
+        historyURL.push_back(homepage);
+    }
+    
+    void visit(string url) {
+        // rebase pointer and locate the url
+        while (pointer+1<historyURL.size()) {
+            historyURL.pop_back();
+        }
+        historyURL.push_back(url);
+        pointer++;
+    }
+    
+    string forward(int steps) {
+        pointer+=steps;
+        if(pointer>=historyURL.size()) pointer=historyURL.size()-1;
+        return historyURL[pointer];
+    }
+    
+    string back(int steps) {
+        pointer-=steps;
+        if(pointer<0)  pointer=0;
+        return historyURL[pointer];
+    }
+};
+
+/**
+ * Your BrowserHistory object will be instantiated and called as such:
+ * BrowserHistory* obj = new BrowserHistory(homepage);
+ * obj->visit(url);
+ * string param_2 = obj->back(steps);
+ * string param_3 = obj->forward(steps);
+ */
