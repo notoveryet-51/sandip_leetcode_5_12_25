@@ -1,0 +1,27 @@
+Leetcode 933
+
+class RecentCounter {
+public:
+    int counter;
+    vector<int> calls;
+    int pointer=0;
+    RecentCounter() {
+        counter=0;
+        calls.clear();
+    }
+    
+    int ping(int t) {
+        calls.push_back(t);
+        while (t-calls[pointer]>3000) {
+            pointer++;
+        }
+        counter=calls.size()-pointer;
+        return counter;
+    }
+};
+
+/**
+ * Your RecentCounter object will be instantiated and called as such:
+ * RecentCounter* obj = new RecentCounter();
+ * int param_1 = obj->ping(t);
+ */
