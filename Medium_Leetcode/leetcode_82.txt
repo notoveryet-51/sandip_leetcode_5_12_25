@@ -1,0 +1,36 @@
+Leetcode 82
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        ListNode *temp=head;
+        vector<int> vec;
+        while (temp!=nullptr) {
+            vec.push_back(temp->val);
+            temp=temp->next;
+        }
+        map<int,int> mpp;
+        for (auto it: vec) mpp[it]++;
+        vector<int> endList;
+        for (auto it: mpp) if (it.second==1) endList.push_back(it.first);
+        if (endList.empty()) return nullptr;
+        ListNode *head2=new ListNode(endList[0]);
+        temp=head2;
+        for (int i=1; i<endList.size(); i++) {
+            ListNode *newNode=new ListNode(endList[i]);
+            temp->next=newNode;
+            temp=temp->next;
+        }
+        return head2;
+    }
+};
