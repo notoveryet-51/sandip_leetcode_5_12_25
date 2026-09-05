@@ -14,3 +14,23 @@ public:
         return min(prev1, prev2);
     }
 };
+
+class Solution {
+public:
+    int n;
+    int helperFunction(vector<int> &dp, vector<int> &cost, int i) {
+        if (i>=n) return 0;
+        if (dp[i]!=-1) return dp[i];
+        // add current cost to both
+        int jump1=helperFunction(dp, cost, i+1)+cost[i]; 
+        int jump2=helperFunction(dp, cost, i+2)+cost[i];
+        return dp[i]=min(jump1, jump2);
+    }
+    int minCostClimbingStairs(vector<int>& cost) {
+        n=cost.size();
+        vector<int> dp1(n+1, -1), dp2(n+1, -1);
+        int start0=helperFunction(dp1, cost, 0);
+        int start1=helperFunction(dp2, cost, 1);
+        return min(start1, start0);
+    }
+};
