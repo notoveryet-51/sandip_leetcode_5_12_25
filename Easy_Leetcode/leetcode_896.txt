@@ -1,0 +1,11 @@
+Leetcode 896
+
+class Solution {
+public:
+    bool isMonotonic(vector<int>& nums) {
+        vector<int> copy1=nums, copy2=nums;
+        sort(copy1.rbegin(), copy1.rend());
+        sort(copy2.begin(), copy2.end());
+        return (copy1==nums || copy2==nums);
+    }
+};
