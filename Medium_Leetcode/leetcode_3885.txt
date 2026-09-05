@@ -1,0 +1,42 @@
+Leetcode 3885
+
+class EventManager {
+public:
+    unordered_map<int, int> id_to_p;
+    set<pair<int, int>> s;
+    EventManager(vector<vector<int>>& events) {
+        for (const auto& it : events) {
+            int id = it[0];
+            int priority = it[1];
+            id_to_p[id] = priority;
+            s.insert({-priority, id});
+        }
+    }
+    
+    void updatePriority(int eventId, int newPriority) {
+        auto it = id_to_p.find(eventId);
+        if (it != id_to_p.end()) {
+            int oldPriority = it->second;
+            s.erase({-oldPriority, eventId}); 
+            it->second = newPriority;
+            s.insert({-newPriority, eventId}); 
+        }
+    }
+    
+    int pollHighest() {
+        if (s.empty()) return -1;
+        
+        auto [neg_p, id] = *s.begin(); // peek
+        s.erase(s.begin());            // pop
+        id_to_p.erase(id);
+        
+        return id;
+    }
+};
+
+/**
+ * Your EventManager object will be instantiated and called as such:
+ * EventManager* obj = new EventManager(events);
+ * obj->updatePriority(eventId,newPriority);
+ * int param_2 = obj->pollHighest();
+ */
