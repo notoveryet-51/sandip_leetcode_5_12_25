@@ -1,0 +1,22 @@
+Leetcode 3000
+
+class Solution {
+public:
+    int areaOfMaxDiagonal(vector<vector<int>>& dimensions) {
+        double maxDiag=-1;
+        int maxArea=-1;
+        for (auto it: dimensions) {
+            int a=it[0], b=it[1];
+            double diag=sqrt(a*a+b*b);
+            int area=a*b;
+            if (diag>maxDiag) {
+                maxDiag=diag;
+                maxArea=area;
+            }
+            else if (diag==maxDiag) {
+                maxArea=max(maxArea, area);
+            }
+        }
+        return maxArea;
+    }
+};
