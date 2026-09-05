@@ -23,3 +23,24 @@ public:
         return max(case1, case2);
     }
 };
+
+
+class Solution {
+public:
+    int helperFunction(vector<int> &dp, vector<int> &nums, int i, int n) {
+        if (i>=n) return 0;
+        if (dp[i]!=-1) return dp[i];
+        int robHouse=helperFunction(dp, nums, i+2, n)+nums[i];
+        int skipHouse=helperFunction(dp, nums, i+1, n);
+        return dp[i]=max(robHouse, skipHouse);
+    }
+    int rob(vector<int>& nums) {
+        int n=nums.size();
+        if (n==1) return nums[0];
+        vector<int> dp(n+1, -1);
+        int start0=helperFunction(dp, nums, 0, n-1); // if we start from 0, we can't consider n-1 as they're adjacent to each other. So the overflow criteria is n-1 not n
+        dp.assign(n+1, -1);
+        int start1=helperFunction(dp, nums, 1, n); 
+        return max(start0, start1);
+    }
+};
