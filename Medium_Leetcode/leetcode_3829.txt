@@ -1,0 +1,48 @@
+Leetcode 3829
+
+class RideSharingSystem {
+public:
+    vector<int> driver, rider;
+    RideSharingSystem() {
+        
+    }
+    
+    void addRider(int riderId) {
+        rider.push_back(riderId);
+    }
+    
+    void addDriver(int driverId) {
+        driver.push_back(driverId);
+    }
+    
+    vector<int> matchDriverWithRider() {
+        if (rider.empty() || driver.empty()) return {-1, -1};
+        int ride=rider[0];
+        rider.erase(rider.begin());
+        int drive=driver[0];
+        driver.erase(driver.begin());
+        return {drive, ride};
+    }
+    
+    void cancelRider(int riderId) {
+        int n=rider.size();
+        int idx=-1;
+        for (int i=0; i<n; i++) {
+            if (riderId==rider[i])  {
+                idx=i; break;
+            }
+        }
+        if (idx!=-1) {
+            rider.erase(rider.begin()+idx);
+        }
+    }
+};
+
+/**
+ * Your RideSharingSystem object will be instantiated and called as such:
+ * RideSharingSystem* obj = new RideSharingSystem();
+ * obj->addRider(riderId);
+ * obj->addDriver(driverId);
+ * vector<int> param_3 = obj->matchDriverWithRider();
+ * obj->cancelRider(riderId);
+ */
