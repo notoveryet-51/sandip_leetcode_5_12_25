@@ -1,0 +1,16 @@
+Leetcode 1137
+
+class Solution {
+public:
+    int helperFunction (vector<int> &dp, int n) {
+        if (n==0 || n==1) return n;
+        if (n==2)   return 1;
+        if (dp[n]!=-1) return dp[n];
+        int sum=helperFunction(dp, n-1)+helperFunction(dp, n-2)+helperFunction(dp, n-3);
+        return dp[n]=sum;
+    }
+    int tribonacci(int n) {
+        vector<int> dp(n+1, -1);
+        return helperFunction(dp, n);
+    }
+};
