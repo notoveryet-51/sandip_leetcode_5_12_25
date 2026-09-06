@@ -1,0 +1,56 @@
+Leetcode 3905
+
+class Solution {
+public:
+    vector<vector<int>> colorGrid(int n, int m, vector<vector<int>>& sources) {
+        vector<vector<int>> grid(n, vector<int>(m, 0));
+        vector<vector<int>> dist(n, vector<int>(m, 1e9)); // distance check
+        queue<pair<pair<int, int>, int>> q; // row, col, color
+        for (auto it: sources) {
+            int row=it[0];
+            int col=it[1];
+            int color=it[2];
+            if (color > grid[row][col]) { // handle duplicate sources at the same cell
+                grid[row][col]=color;
+            }
+            dist[row][col]=0; // source cells
+        }
+        // push sources with their resolved colors
+        for (int r = 0; r < n; r++) { 
+            for (int c = 0; c < m; c++) {
+                if (dist[r][c] == 0) {
+                    q.push({{r, c}, grid[r][c]});
+                }
+            }
+        }
+        // start the bfs
+        vector<int> delRow={0, -1, 0, 1};
+        vector<int> delCol={1, 0, -1, 0};
+        while (!q.empty())  {
+            auto it=q.front();
+            q.pop();
+            int row=it.first.first;
+            int col=it.first.second;
+            int color=it.second;
+            if (color < grid[row][col]) continue; // prune stale paths overtaken by a larger color
+            for (int i=0; i<4; i++) {
+                int currRow=row+delRow[i];
+                int currCol=col+delCol[i];
+                if (currRow>=0 && currRow<n && currCol>=0 && currCol<m) {
+                    int nextDist=dist[row][col]+1;
+                    if (nextDist<dist[currRow][currCol]) { // strictly closer source found
+                        dist[currRow][currCol]=nextDist; // update to shorter distance
+                        grid[currRow][currCol]=color;
+                        q.push({{currRow, currCol}, color});
+                    } else if (nextDist==dist[currRow][currCol]) { // tie
+                        if (color>grid[currRow][currCol]) { // tie-breaker
+                            grid[currRow][currCol]=color; // resolve tie with larger color
+                            q.push({{currRow, currCol}, color}); // propagate the winning color to subsequent neighbors
+                        }
+                    }
+                }
+            }
+        }
+        return grid;
+    }
+};
