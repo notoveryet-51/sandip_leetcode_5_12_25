@@ -1,0 +1,36 @@
+Leetcode 869
+
+class Solution {
+public:
+    bool reorderedPowerOf2(int n) {
+        string s="";
+        if (n==1) return true;
+        bool check2=false, check4=false, check8=false, check6=false;
+        while (n>0) {
+            int dig=n%10;
+            if (dig==2) check2=true;
+            else if (dig==4) check4=true;
+            else if (dig==6) check6=true;
+            else if (dig==8) check8=true;
+            s+=to_string(dig);
+            n/=10;
+        } 
+        vector<char> candidates;
+        if (check2) candidates.push_back('2');
+        if (check4) candidates.push_back('4');
+        if (check6) candidates.push_back('6');
+        if (check8) candidates.push_back('8');
+        for (char lastDigit : candidates) {
+            string rem = s;
+            rem.erase(rem.find(lastDigit), 1);
+            sort(rem.begin(), rem.end());
+            do {
+                if (rem.size() > 0 && rem[0] == '0') continue; // skip leading 0 numbers
+                string full = rem + lastDigit;
+                int val = stoi(full);
+                if ((val & (val - 1)) == 0) return true;
+            } while (next_permutation(rem.begin(), rem.end()));
+        }
+        return false;
+    }
+};
