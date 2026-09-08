@@ -1,0 +1,33 @@
+Leetcode 433
+
+class Solution {
+public:
+    int minMutation(string startGene, string endGene, vector<string>& bank) {
+        unordered_map<string, int> lookUp;
+        for (auto it: bank) {
+            lookUp.insert({it, 1});
+        }
+        vector<char> genes={'A', 'G', 'C', 'T'};
+        queue<pair<string, int>> q;
+        int minMutations=1e9;
+        q.push({startGene, 0}); // gene, mutations
+        while (!q.empty()) {
+            auto it=q.front();
+            q.pop();
+            string gene=it.first;
+            int mutate=it.second;
+            if (gene==endGene) return mutate; // once reaching target return the total mutations immediately
+            for (int j=0; j<8; j++) {
+                string temp=gene;
+                for (int i=0; i<4; i++) {
+                    temp[j]=genes[i];
+                    if (lookUp.find(temp)!=lookUp.end()) {
+                        q.push({temp, mutate+1});
+                        lookUp.erase(temp); // we remove the used gene from bank
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+};
