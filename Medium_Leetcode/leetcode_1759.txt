@@ -1,0 +1,27 @@
+Leetcode 1759
+
+class Solution {
+public:
+    int MOD=1e9+7;
+    int countHomogenous(string s) {
+        int n=s.size();
+        vector<string> vec;
+        string str="";
+        str+=s[0];
+        for (int i=0; i<n-1; i++) {
+            if (s[i]==s[i+1]) str+=s[i+1];
+            else {
+                vec.push_back(str);
+                str="";
+                str+=s[i+1];
+            } 
+        }
+        vec.push_back(str);
+        long long count=0;
+        for (auto it: vec) {
+            long long l=it.length();
+            count=(count+(l*(l+1)/2))%MOD;
+        }
+        return (int)count%MOD; 
+    }
+};
