@@ -1,0 +1,32 @@
+Leetcode 438
+
+class Solution {
+public:
+    bool check(unordered_map<char, int> &mpp, unordered_map<char, int> &mp) {
+        for (auto it: mp) {
+            if (mpp.find(it.first)==mpp.end()) return false;
+            if (mpp.find(it.first)!=mpp.end() && it.second!=mpp[it.first]) return false;
+        }
+        return true;
+    }
+    vector<int> findAnagrams(string s, string p) {
+        unordered_map<char, int> mp;
+        unordered_map<char, int> mpp;
+        for (auto it: p)    mp[it]++;
+        int n=s.size();
+        int i=0, j=0;
+        vector<int> res;
+        while (j<n) {
+            mpp[s[j]]++;
+            if (mpp.find(s[j])!=mpp.end()) {
+                while (mpp[s[j]]>mp[s[j]]) {
+                    mpp[s[i]]--;
+                    i++;
+                }
+            }
+            if (check(mpp, mp)) res.push_back(i);
+            j++;
+        }
+        return res;
+    }
+};
