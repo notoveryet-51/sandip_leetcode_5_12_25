@@ -1,0 +1,22 @@
+Leetcode 3597
+
+class Solution {
+public:
+    vector<string> partitionString(string s) {
+        map<string, int> mpp;
+        int n=s.size();
+        string str="";
+        int j=0;
+        vector<string> vec;
+        while (j<n) {
+            str+=s[j];
+            if (mpp.find(str)==mpp.end()) {
+                mpp.insert({str, 1});
+                vec.push_back(str);
+                str="";
+            }
+            j++;
+        }
+        return vec;
+    }
+};
