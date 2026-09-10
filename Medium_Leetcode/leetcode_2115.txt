@@ -1,0 +1,40 @@
+Leetcode 2115
+
+class Solution {
+public:
+    vector<string> findAllRecipes(vector<string>& recipes, vector<vector<string>>& ingredients, vector<string>& supplies) {
+        vector<string> result;
+        unordered_map<string, int> mpp;
+        for (const auto& it: supplies) mpp.insert({it, 1});
+
+        unordered_map<string, vector<string>> adj;
+        for (int i=0; i<recipes.size(); i++) {
+            adj.insert({recipes[i], ingredients[i]});
+        }
+
+        bool madeNew = true;
+        while (madeNew) {
+            madeNew = false;
+            for (const auto& it : adj) {
+                string rec = it.first;
+                if (mpp.find(rec) != mpp.end()) continue;
+
+                const auto& temp = it.second;
+                bool check = true;
+                for (const auto& ing : temp) {
+                    if (mpp.find(ing) == mpp.end()) {
+                        check = false;
+                        break;
+                    }
+                }
+                if (check) {
+                    mpp.insert({rec, 1});
+                    result.push_back(rec);
+                    madeNew = true;
+                }
+            }
+        }
+
+        return result;
+    }
+};
