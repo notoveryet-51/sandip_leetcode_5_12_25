@@ -1,0 +1,33 @@
+Leetcode 3483
+
+#include <vector>
+
+using namespace std;
+
+class Solution {
+public:
+    int totalNumbers(vector<int>& digits) {
+        vector<int> freq(10, 0);
+        for (int d : digits) freq[d]++; // populate the freq array with the numbers from the digits array
+
+        int count = 0;
+        for (int num = 100; num <= 998; num += 2) {
+            int h = num / 100;
+            int t = (num / 10) % 10;
+            int u = num % 10;
+            // check if there are enough digits for the number formation
+            freq[h]--;
+            freq[t]--;
+            freq[u]--;
+
+            if (freq[h] >= 0 && freq[t] >= 0 && freq[u] >= 0) {
+                count++;
+            }
+            // reform the frequency broken
+            freq[h]++;
+            freq[t]++;
+            freq[u]++;
+        }
+        return count;
+    }
+};
