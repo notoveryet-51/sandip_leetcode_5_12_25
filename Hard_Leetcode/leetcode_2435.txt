@@ -1,0 +1,23 @@
+Leetcode 2435
+
+class Solution {
+public:
+    int m, n, K;
+    int MOD=1e9+7;
+    int dpHelper(vector<vector<vector<int>>> &dp, vector<vector<int>>& grid, int x, int y, int sum) {
+        if (x==m || y==n) return 0;
+        sum=(sum+grid[x][y])%K;
+        if (x==m-1 && y==n-1) {
+            return (sum==0) ? 1 : 0;
+        }
+        if (dp[x][y][sum]!=-1) return dp[x][y][sum];
+        int right=dpHelper(dp, grid, x, y+1, sum);
+        int down=dpHelper(dp, grid, x+1, y, sum);
+        return dp[x][y][sum]=(right+down)%MOD;
+    }
+    int numberOfPaths(vector<vector<int>>& grid, int k) {
+        m=grid.size(); n=grid[0].size(); K=k;
+        vector<vector<vector<int>>> dp(m, vector<vector<int>>(n, vector<int>(k, -1)));
+        return dpHelper(dp, grid, 0, 0, 0);
+    }
+};
