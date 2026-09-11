@@ -33,3 +33,20 @@ public:
         return count;
     }
 };
+
+
+class Solution {
+public:
+    int dpHelper(vector<vector<int>> &dp, int x, int y, int m, int n) {
+        if (x==m-1 && y==n-1) return 1;
+        if (x>=m || y>=n) return 0;
+        if (dp[x][y]!=-1) return dp[x][y];
+        int rightMove=dpHelper(dp, x, y+1, m, n);
+        int downMove=dpHelper(dp, x+1, y, m, n);
+        return dp[x][y]=downMove+rightMove;
+    }
+    int uniquePaths(int m, int n) {
+        vector<vector<int>> dp(m+1, vector<int>(n+1, -1));
+        return dpHelper(dp, 0, 0, m, n);
+    }
+}; 
