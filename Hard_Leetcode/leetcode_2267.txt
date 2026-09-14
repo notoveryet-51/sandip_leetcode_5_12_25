@@ -1,0 +1,25 @@
+Leetcode 2267
+
+class Solution {
+public:
+    int m, n;
+    int dpHelper(vector<vector<vector<int>>> &dp, vector<vector<char>>& grid, int x, int y, int diff) {
+        if (x==m || y==n) return false;
+        if (grid[x][y]=='(') diff+=1;
+        else diff-=1;
+        if (x==m-1 && y==n-1) {
+            if (diff==0) return true;
+            return false;
+        }
+        if (diff<0) return false;
+        if (dp[x][y][diff]!=-1) return dp[x][y][diff];
+        bool down=dpHelper(dp, grid, x+1, y, diff);
+        bool right=dpHelper(dp, grid, x, y+1, diff);
+        return dp[x][y][diff]=(down||right);
+    }
+    bool hasValidPath(vector<vector<char>>& grid) {
+        m=grid.size(), n=grid[0].size();
+        vector<vector<vector<int>>> dp(m, vector<vector<int>>(n, vector<int>(250, -1)));
+        return dpHelper(dp, grid, 0, 0, 0);
+    }
+};
