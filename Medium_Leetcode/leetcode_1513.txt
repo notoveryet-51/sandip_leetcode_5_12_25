@@ -1,0 +1,25 @@
+Leetcode 1513
+
+class Solution {
+public:
+    int MOD=1e9+7;
+    int numSub(string s) {
+        vector<int> vec;
+        int count=0;
+        int n=s.size();
+        for (int i=0; i<n; i++) {
+            if (s[i]=='1') count++;
+            else {
+                if (count>0) vec.push_back(count);
+                count=0;
+            }
+        }
+        if (count>0) vec.push_back(count);
+        long long sum=0;
+        for (auto it: vec) {
+            long long temp = ((1LL*(it%MOD)*((it+1)%MOD))%MOD*500000004LL)%MOD;
+            sum=(sum+temp)%MOD;
+        }
+        return (int)sum%MOD;
+    }
+};
