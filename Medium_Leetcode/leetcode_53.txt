@@ -12,3 +12,30 @@ public:
         return maxi;
     }
 };
+
+
+class Solution {
+public:
+    int n;
+    int dpHelper(vector<vector<int>> &dp, vector<int>& nums, int idx, bool pick) {
+        if (n==idx) {
+            return (pick) ? 0 : INT_MIN;
+        }
+        if (dp[idx][pick]!=INT_MIN) return dp[idx][pick];
+        if (pick) {
+            int temp=nums[idx]+dpHelper(dp, nums, idx+1, true);
+            int temp1=0;
+            return dp[idx][pick]=max(temp, temp1);
+        }
+        else {
+            int temp=dpHelper(dp, nums, idx+1, true)+nums[idx];
+            int temp1=dpHelper(dp, nums, idx+1, false);
+            return dp[idx][pick]=max(temp, temp1);
+        }
+    }
+    int maxSubArray(vector<int>& nums) {
+        n=nums.size();
+        vector<vector<int>> dp(n+1, vector<int>(2, INT_MIN));
+        return dpHelper(dp, nums, 0, false);
+    }
+};
