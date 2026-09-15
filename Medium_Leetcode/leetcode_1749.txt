@@ -1,0 +1,48 @@
+Leetcode 1749
+
+class Solution {
+public:
+    int n;
+    // find max subarray sum
+    int dpHelper1(vector<vector<int>> &dp, vector<int> &nums, int i, int state) {
+        if (n==i) {
+            return (state) ? 0 : -1e9;
+        }
+        if (dp[i][state]!=-1e9) return dp[i][state];
+        if (state) {
+            int temp=(nums[i]+dpHelper1(dp, nums, i+1, true));
+            int temp2=0;
+            return dp[i][state]=max(temp, temp2);
+        }
+        else {
+            int temp=(nums[i]+dpHelper1(dp, nums, i+1, true));
+            int temp2=(dpHelper1(dp, nums, i+1, false));
+            return dp[i][state]=max(temp, temp2);
+        }
+    }
+    // find min subarray sum
+    int dpHelper2(vector<vector<int>> &dp, vector<int> &nums, int i, int state) {
+        if (n==i) {
+            return (state) ? 0 : 1e9;
+        }
+        if (dp[i][state]!=-1e9) return dp[i][state];
+        if (state) {
+            int temp=(nums[i]+dpHelper2(dp, nums, i+1, true));
+            int temp2=0;
+            return dp[i][state]=min(temp, temp2);
+        }
+        else {
+            int temp=(nums[i]+dpHelper2(dp, nums, i+1, true));
+            int temp2=(dpHelper2(dp, nums, i+1, false));
+            return dp[i][state]=min(temp, temp2);
+        }
+    }
+    int maxAbsoluteSum(vector<int>& nums) {
+        n=nums.size();
+        vector<vector<int>> dp(n, vector<int> (2, -1e9));
+        int maxSum=dpHelper1(dp, nums, 0, false);
+        dp.assign(n, vector<int>(2, -1e9));
+        int minSum=dpHelper2(dp, nums, 0, false);
+        return max(abs(maxSum), abs(minSum));
+    }
+};
