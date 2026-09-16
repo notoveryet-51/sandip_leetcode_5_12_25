@@ -1,0 +1,21 @@
+Leetcode 377
+
+class Solution {
+public:
+    int n;
+    int dpHelper(vector<int> &dp, vector<int> &nums, int target, int sum) {
+        if (sum>target) return 0;
+        if (sum==target) return 1;
+        if (dp[sum]!=-1) return dp[sum];
+        int ways=0;
+        for (auto it: nums) {
+            ways+=dpHelper(dp, nums, target, sum+it); // we try all possible combintions from each number. we try (1, 2, 3) from each of 1, 2, 3 and thus form the recursive tree
+        }
+        return dp[sum]=ways;
+    }
+    int combinationSum4(vector<int>& nums, int target) {
+        n=nums.size();
+        vector<int> dp(target+1, -1);
+        return dpHelper(dp, nums, target, 0);
+    }
+};
