@@ -1,0 +1,24 @@
+Leetcode 139
+
+class Solution {
+    int dpHelper(int i, const string& s, const unordered_set<string>& dict, vector<int>& dp) { 
+        if (i==s.size()) return true;
+        if (dp[i]!=-1) return dp[i];
+
+        for (int len=1; i+len<=s.size(); len++) { 
+            string sub=s.substr(i, len);
+            if (dict.count(sub) && dpHelper(i+len, s, dict, dp)==1) { 
+                return dp[i]=true; 
+            }
+        }
+        return dp[i]=false;
+    }
+
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        int n=s.size();
+        unordered_set<string> dict(wordDict.begin(), wordDict.end());
+        vector<int> dp(n, -1);
+        return dpHelper(0, s, dict, dp); 
+    }
+};
