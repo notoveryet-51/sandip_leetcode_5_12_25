@@ -1,0 +1,22 @@
+Leetcode 2125
+
+class Solution {
+public:
+    int numberOfBeams(vector<string>& bank) {
+        int n=bank.size();
+        vector<int> temp;
+        for (int i=0; i<n; i++) {
+            int count1=0;
+            for (auto it: bank[i]) {
+                if (it=='1') count1++;
+            }
+            if (count1!=0) temp.push_back(count1);
+        }
+        int sum=0;
+        int len=temp.size();
+        for (int i=0; i<len-1; i++) {
+            sum+=temp[i]*temp[i+1];
+        }
+        return sum;
+    }
+};
