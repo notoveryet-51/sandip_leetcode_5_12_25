@@ -1,0 +1,26 @@
+Leetcode 1658
+
+class Solution {
+    public int minOperations(int[] nums, int x) {
+        int n=nums.length;
+        int left=0, right=0;
+        int maxLen=-1;
+        long sum=0;
+        long total=0;
+        for (int i=0; i<n; i++) total+=nums[i];
+        long target=total-x;
+        if (target==0) return n;
+        while (right<n) {
+            sum+=nums[right];
+            while (left<=right && sum>target) {
+                sum-=nums[left];
+                left++;
+            }
+            if (sum==target) {
+                maxLen=Math.max(maxLen, right-left+1);
+            }
+            right++;
+        }
+        return maxLen==-1 ? -1: n-maxLen;
+    }
+}
