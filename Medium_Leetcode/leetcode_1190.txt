@@ -1,0 +1,43 @@
+Leetcode 1190
+
+class Solution {
+    public String reverseParentheses(String str) {
+        List<Integer> lst1=new ArrayList<>(), lst2=new ArrayList<>();
+        StringBuilder s=new StringBuilder(str);
+        int n=s.length();
+        Deque<Integer> stackIdx = new ArrayDeque<>();
+        for (int i=0; i<n; i++) {
+            if (s.charAt(i)=='(') stackIdx.push(i);
+            else if (s.charAt(i)==')') {
+                lst1.add(stackIdx.pop());
+                lst2.add(i);
+            }
+        }
+        int len=lst1.size();
+        StringBuilder sb=new StringBuilder();
+        Deque<Character> Stack=new ArrayDeque<>();
+        for (int i=0; i<len; i++) {
+            int start=lst1.get(i);
+            int end=lst2.get(i);
+            sb.setLength(0);
+            for (int j=start; j<=end; j++) {
+                if (s.charAt(j)=='(' || s.charAt(j)==')') continue;
+                Stack.push(s.charAt(j));
+            }
+            while (!Stack.isEmpty()) {
+                sb.append(Stack.pop());
+            }
+            int j=0;
+            for (int k=start; k<=end; k++) {
+                if (s.charAt(k)=='(' || s.charAt(k)==')') continue;
+                s.setCharAt(k, sb.charAt(j++));
+            }
+        }
+        StringBuilder finalString=new StringBuilder();
+        for (int i=0; i<n; i++) {
+            if (s.charAt(i)=='(' || s.charAt(i)==')') continue;
+            finalString.append(s.charAt(i));
+        }
+        return finalString.toString();
+    }
+}
