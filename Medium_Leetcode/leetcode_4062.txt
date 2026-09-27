@@ -1,0 +1,11 @@
+Leetcode 4062
+
+class Solution {
+    public boolean canTransform(int[] source, int[] target) {
+        long srcSum=0;
+        long tarSum=0;
+        for (int it: source) srcSum+=it;
+        for (int it: target) tarSum+=it;
+        return srcSum==tarSum;
+    }
+}
