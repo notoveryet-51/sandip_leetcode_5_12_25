@@ -1,0 +1,15 @@
+Leetcode 4061
+
+class Solution {
+    public int minQueenMoves(int[] source, int[] target) {
+        int srcX=source[0];
+        int srcY=source[1];
+        int tarX=target[0];
+        int tarY=target[1];
+        if (srcX==tarX && srcY==tarY) return 0;
+        if (srcX==tarX) return 1;
+        if (srcY==tarY) return 1;
+        if ((srcX-tarX)*(srcX-tarX)==(srcY-tarY)*(srcY-tarY)) return 1;
+        return 2;
+    }
+}
