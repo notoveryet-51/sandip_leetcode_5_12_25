@@ -1,0 +1,29 @@
+Leetcode 299
+
+class Solution {
+public:
+    string getHint(string secret, string guess) {
+        int i=0, j=0;
+        int n=secret.length();
+        unordered_map<char, int> mp1, mp2;
+        int count=0;
+        while (j<n) {
+            if (secret[i]==guess[j]) {
+                count++;    
+            }
+            else {
+                mp1[secret[i]]++;
+                mp2[guess[j]]++;
+            }
+            i++;    j++;
+        }
+        int count2=0;
+        for (auto it: mp1) {
+            if (mp2.find(it.first)!=mp2.end()) {
+                if (mp2[it.first]>it.second) count2+=it.second;
+                else count2+=mp2[it.first];
+            }
+        }
+        return to_string(count)+"A"+to_string(count2)+"B";
+    }
+};
