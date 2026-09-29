@@ -1,0 +1,65 @@
+Leetcode 423
+
+class Solution {
+public:
+    string originalDigits(string s) {
+        map<char, int> mpp;
+        int n=s.length();
+        for (int i=0; i<n; i++) {
+            mpp[s[i]]++;
+        }
+        // map<string, int> m={{"one", 1}, {"two", 2}, {"three", 3}, {"four", 4}, {"five", 5}, {"six", 6}, {"seven", 7}, {"eight", 8}, {"nine", 9}, {"zero", 0}};
+        string result="";
+        while (mpp['z'] > 0) {
+            result += '0';
+            mpp['z']--; mpp['e']--; mpp['r']--; mpp['o']--;
+        }
+
+        while (mpp['w'] > 0) {
+            result += '2';
+            mpp['t']--; mpp['w']--; mpp['o']--;
+        }
+
+        while (mpp['u'] > 0) {
+            result += '4';
+            mpp['f']--; mpp['o']--; mpp['u']--; mpp['r']--;
+        }
+
+        while (mpp['x'] > 0) {
+            result += '6';
+            mpp['s']--; mpp['i']--; mpp['x']--;
+        }
+
+        while (mpp['g'] > 0) {
+            result += '8';
+            mpp['e']--; mpp['i']--; mpp['g']--; mpp['h']--; mpp['t']--;
+        }
+
+        while (mpp['h'] > 0) {
+            result += '3';
+            mpp['t']--; mpp['h']--; mpp['r']--; mpp['e']--; mpp['e']--;
+        }
+
+        while (mpp['f'] > 0) {
+            result += '5';
+            mpp['f']--; mpp['i']--; mpp['v']--; mpp['e']--;
+        }
+
+        while (mpp['s'] > 0) {
+            result += '7';
+            mpp['s']--; mpp['e']--; mpp['v']--; mpp['e']--; mpp['n']--;
+        }
+
+        while (mpp['o'] > 0) {
+            result += '1';
+            mpp['o']--; mpp['n']--; mpp['e']--;
+        }
+
+        while (mpp['i'] > 0) {
+            result += '9';
+            mpp['n']--; mpp['i']--; mpp['n']--; mpp['e']--;
+        }
+        sort(result.begin(), result.end());
+        return result;
+    }
+};
