@@ -1,0 +1,24 @@
+Leetcode 1111
+
+class Solution {
+    public int[] maxDepthAfterSplit(String seq) {
+        int n=seq.length();
+        int[] result=new int[n];
+        int depth=0;
+        // even depth in group a and odd depth in group b
+        // while closing the respective closing brackets in those group as well
+        for (int i=0; i<n; i++) {
+            if (seq.charAt(i)=='(') {
+                depth++;
+                if (depth%2==1) result[i]=1;
+                else result[i]=0;
+            }
+            else {
+                if (depth%2==1) result[i]=1;
+                else result[i]=0;
+                depth--;
+            }
+        }
+        return result;
+    }
+}
