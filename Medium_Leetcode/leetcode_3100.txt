@@ -1,0 +1,15 @@
+Leetcode 3100
+
+int maxBottlesDrunk(int numBottles, int numExchange) {
+    int count=numBottles;
+    int drunk=numBottles;
+    while (true) {
+        if (drunk<numExchange) return count;
+        else {
+            drunk-=(numExchange-1);
+            numExchange++;
+            count++;
+        }
+    }
+    return -1;
+}
