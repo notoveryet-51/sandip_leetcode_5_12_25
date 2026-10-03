@@ -1,0 +1,40 @@
+Leetcode 32
+
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        int i=0, j=0;
+        int n=s.size();
+        int openCount=0, closeCount=0, maxLen=0;
+        while (j<n) {
+            if (s[j]=='(') openCount++;
+            else {
+                closeCount++;
+                if (closeCount>openCount) {
+                    openCount=0;
+                    closeCount=0;
+                    i=j+1;
+                }
+            }
+            if (openCount==closeCount)  maxLen=max(maxLen, j-i+1);
+            j++;
+        }
+        openCount=0;
+        closeCount=0;
+        int k=n-1, right=n-1;
+        while (k>=i) {
+            if (s[k]==')') closeCount++;
+            else {
+                openCount++;
+                if (openCount>closeCount) {
+                    openCount=0;
+                    closeCount=0;
+                    right=k-1;
+                }
+            }
+            if (openCount==closeCount) maxLen=max(maxLen, right-k+1);
+            k--;
+        }
+        return maxLen;
+    }
+};
