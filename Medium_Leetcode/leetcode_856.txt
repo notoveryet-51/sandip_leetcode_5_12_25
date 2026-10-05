@@ -1,0 +1,31 @@
+Leetcode 856
+
+class Solution {
+public:
+    int scoreOfParentheses(string s) {
+        int n=s.size();
+        int count=0;
+        int finalSum=0;
+        stack<int> st; // Store running scores instead of characters to handle nesting
+        int i=0;
+        while (i<n) {
+            if (s[i]=='(') {
+                st.push(0); // Use 0 as a marker for a newly opened '('
+            } else {
+                int cur = 0; // Accumulate the score inside the current parentheses pair
+                while (!st.empty() && st.top() != 0) { // Sum all completed scores within this scope
+                    cur += st.top();
+                    st.pop();
+                }
+                st.pop();
+                st.push(max(2 * cur, 1)); // "()" contributes 1, while "(A)" contributes 2 * A
+            }
+            i++;
+        }
+        while (!st.empty()) { // Sum all scores at the root level
+            finalSum += st.top();
+            st.pop();
+        }
+        return finalSum;
+    }
+};
