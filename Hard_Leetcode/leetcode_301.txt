@@ -1,0 +1,43 @@
+Leetcode 301
+
+class Solution {
+public:
+    int maxLen = 0;
+
+    void helperFunction(string &s, unordered_set<string> &res, string &temp, int idx, int count) {
+        // we only push to string the max length that could be obtained through the combinations
+        // if any valid string less than the current maxlength, we skip those strings
+        // whenever we find one string greater than the current max length we clear the resultant set and put it freshly as we dont need the old elements in the set
+        if (idx == s.size()) {
+            if (count == 0) {
+                int len = temp.size();
+                if (len > maxLen) {
+                    maxLen = len;
+                    res.clear();
+                    res.insert(temp);
+                } else if (len == maxLen) {
+                    res.insert(temp);
+                }
+            }
+            return;
+        }
+        char c = s[idx];
+        temp.push_back(c);
+        int nextCount = count + (c == '(' ? 1 : (c == ')' ? -1 : 0));
+        if (nextCount >= 0) {
+            helperFunction(s, res, temp, idx + 1, nextCount);
+        }
+        temp.pop_back();
+        if (c == '(' || c == ')') {
+            helperFunction(s, res, temp, idx + 1, count);
+        }
+    }
+
+    vector<string> removeInvalidParentheses(string s) {
+        unordered_set<string> st;
+        string temp = "";
+        maxLen = 0;
+        helperFunction(s, st, temp, 0, 0);
+        return vector<string>(st.begin(), st.end());
+    }
+};
