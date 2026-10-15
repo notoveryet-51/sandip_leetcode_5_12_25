@@ -1,0 +1,19 @@
+Leetcode 2913
+
+class Solution {
+public:
+    int sum=0;
+    int sumCounts(vector<int>& nums) {
+        int n=nums.size();
+        for (int i=0; i<n; i++) {
+            vector<int> vec;
+            unordered_set<int> st;
+            for (int j=i; j<n; j++) {
+                vec.push_back(nums[j]);
+                for (int k=0; k<vec.size(); k++) st.insert(vec[k]);
+                sum+=st.size()*st.size();
+            }
+        }
+        return sum;
+    }
+};
