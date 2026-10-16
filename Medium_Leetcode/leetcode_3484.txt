@@ -1,0 +1,47 @@
+Leetcode 3484
+
+class Spreadsheet {
+public:
+    int n;
+    vector<vector<int>> sheet;
+    Spreadsheet(int rows) {
+        n=rows;
+        sheet.resize(n+1,vector<int>(26,0));
+    }
+    void setCell(string cell,int value) {
+        int col=toupper(cell[0])-'A';
+        int row=stoi(cell.substr(1));
+        sheet[row][col]=value;
+    }
+    void resetCell(string cell) {
+        int col=toupper(cell[0])-'A';
+        int row=stoi(cell.substr(1));
+        sheet[row][col]=0;
+    }
+    int getValue(string formula) {
+        string X="";
+        string Y="";
+        int itr=1;
+        while(itr<formula.size() && formula[itr]!='+') {
+            X+=formula[itr++];
+        }
+        itr++;
+        while(itr<formula.size()) {
+            Y+=formula[itr++];
+        }
+        int store=0;
+        if(isalpha(X[0])) {
+            int col=toupper(X[0])-'A';
+            int row=stoi(X.substr(1));
+            store=sheet[row][col];
+        } 
+        else store=stoi(X);
+        if(isalpha(Y[0])) {
+            int col=toupper(Y[0])-'A';
+            int row=stoi(Y.substr(1));
+            store+=sheet[row][col];
+        } 
+        else store+=stoi(Y);
+        return store;
+    }
+};
