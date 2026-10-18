@@ -1,0 +1,31 @@
+Leetcode 384
+
+class Solution {
+public:
+    vector<int> og, resetArray;
+    Solution(vector<int>& nums) {
+        og=nums;
+        resetArray=nums;
+    }
+    
+    vector<int> reset() {
+        og=resetArray;
+        return og;
+    }
+    
+    vector<int> shuffle() {
+        int n=og.size();
+        for (int i=n-1; i>0; --i) {
+            int j=rand()%(i+1);
+            swap(og[i], og[j]);
+        }
+        return og;
+    }
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(nums);
+ * vector<int> param_1 = obj->reset();
+ * vector<int> param_2 = obj->shuffle();
+ */
