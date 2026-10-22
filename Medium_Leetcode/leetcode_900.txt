@@ -1,0 +1,30 @@
+Leetcode 900
+
+class RLEIterator {
+public:
+    vector<int> nums;
+    int i;
+    RLEIterator(vector<int>& encoding) {
+        nums=encoding;
+        i=0;
+    }
+    
+    int next(int n) {
+        while (i<nums.size() && n>nums[i]) {
+            n-=nums[i];
+            nums[i]=0; 
+            i+=2;
+        }
+        if (i>=nums.size()) {
+            return -1;
+        }
+        nums[i]-=n;
+        return nums[i+1];
+    }
+};
+
+/**
+ * Your RLEIterator object will be instantiated and called as such:
+ * RLEIterator* obj = new RLEIterator(encoding);
+ * int param_1 = obj->next(n);
+ */
