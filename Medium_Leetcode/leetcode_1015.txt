@@ -1,0 +1,22 @@
+Leetcode 1015
+
+class Solution {
+public:
+    int smallestRepunitDivByK(int k) {
+        if (k%2==0 || k%5==0) return -1;
+        // we use the remainder to find the next level remainder
+        int length=1, dif=1;
+        unordered_map<int, int> mpp;
+        while (true) {
+            dif=dif%k;
+            if (dif==0) return length;
+            else {
+                if (mpp.find(dif)!=mpp.end()) return -1;
+                mpp[dif]++;
+            }
+            dif=dif*10+1;
+            length++;
+        }
+        return -1;
+    }
+};
