@@ -1,0 +1,18 @@
+Leetcode 3693
+
+class Solution {
+public:
+    int climbStairs(int n, vector<int>& costs) {
+        vector<int> dp(n + 1, 0);
+
+        for (int idx = n - 1; idx >= 0; --idx) {
+            int cost1 = (idx + 1 <= n) ? costs[idx]     + 1 + dp[idx + 1] : 1e9;
+            int cost2 = (idx + 2 <= n) ? costs[idx + 1] + 4 + dp[idx + 2] : 1e9;
+            int cost3 = (idx + 3 <= n) ? costs[idx + 2] + 9 + dp[idx + 3] : 1e9;
+
+            dp[idx] = min({cost1, cost2, cost3});
+        }
+
+        return dp[0];
+    }
+};
