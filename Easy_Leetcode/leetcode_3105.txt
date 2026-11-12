@@ -1,0 +1,23 @@
+Leetcode 3105
+
+class Solution {
+public:
+    int longestMonotonicSubarray(vector<int>& nums) {
+        int n=nums.size();
+        int lengthIn=1;
+        for (int i=0; i<n; i++) {
+            for (int j=i+1; j<n; j++) {
+                if (nums[j]>=nums[j-1]) break;
+                else lengthIn=max(lengthIn, j-i+1);
+            }
+        }
+        int lengthDe=1;
+        for (int i=0; i<n; i++) {
+            for (int j=i+1; j<n; j++) {
+                if (nums[j]<=nums[j-1]) break;
+                else lengthDe=max(lengthDe, j-i+1);
+            }
+        }
+        return max(lengthIn, lengthDe);
+    }
+};
