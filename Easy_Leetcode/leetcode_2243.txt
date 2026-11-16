@@ -1,0 +1,22 @@
+Leetcode 2243
+
+class Solution {
+public:
+    string digitSum(string s, int k) {
+        int n=s.length();
+        string temp=s;
+        while (temp.length()>k) {
+            int p=0; string mid="";
+            while (p<temp.length()) {
+                int sum=0; 
+                for (int i=p; i<temp.length() && i<p+k; i++) {
+                    sum+=temp[i]-'0';
+                }
+                p+=k;
+                mid+=to_string(sum);
+            }
+            temp=mid;
+        }
+        return temp;
+    }
+};
