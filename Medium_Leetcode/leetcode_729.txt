@@ -1,0 +1,25 @@
+Leetcode 729
+
+class MyCalendar {
+public:
+    vector<pair<int, int>> vec;
+    MyCalendar() {
+        
+    }
+    
+    bool book(int startTime, int endTime) {
+        if (!vec.empty()) {
+            for (auto it: vec) {
+                if (startTime>=it.first && startTime<it.second || it.first>=startTime && it.first<endTime) return false;
+            }
+        }
+        vec.push_back({startTime, endTime});
+        return true;
+    }
+};
+
+/**
+ * Your MyCalendar object will be instantiated and called as such:
+ * MyCalendar* obj = new MyCalendar();
+ * bool param_1 = obj->book(startTime,endTime);
+ */
